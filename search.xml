@@ -4,7 +4,26 @@
   
     
     <entry>
-      <title>Hexo 框架(一)</title>
+      <title>Golang 写工具类代码的顺序</title>
+      <link href="/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/"/>
+      <url>/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Golang-中-自己总结出来的关于如何写代码工具的顺序"><a href="#Golang-中-自己总结出来的关于如何写代码工具的顺序" class="headerlink" title="Golang 中 自己总结出来的关于如何写代码工具的顺序"></a>Golang 中 自己总结出来的关于如何写代码工具的顺序</h2><p>1.定义结构体(需要封装哪些数据和数据类型)<br>2.func New() (用来创建该结构体)<br>3.确定该工具需要实现的功能<br>4.写代码<br>5.测试<br>6.完善补全代码<br>7.测试<br>8.发布</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Go </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hexo 框架(一) 搭建自己的博客</title>
       <link href="/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
       <url>/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
       

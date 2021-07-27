@@ -532,6 +532,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>输入 </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 <p>当出现 <code>Hi,你的GitHub名称</code> 时成功</p>
+<h1 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h1><ol>
+<li><p>使用 npm 命令安装Hexo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
+<li><p>初始化博客</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure></li>
+<li><p>新建一个博客内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo new 的缩写</span></span><br><span class="line">hexo n 第一个博客</span><br></pre></td></tr></table></figure></li>
+<li><p>开启hexo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo generate 的缩写</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hexo server 的缩写 启动项目 ，如果要后台运行 hexo s &amp; ,默认地址 localhost:4000</span></span><br><span class="line">hexo s </span><br></pre></td></tr></table></figure></li>
+<li><p>查看地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost:4000</span><br><span class="line"># 或者 ip:4000</span><br></pre></td></tr></table></figure></li>
+</ol>
 
   
   
@@ -566,7 +578,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-27T15:59:31+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-27T16:12:19+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2021年7月27日</p>

@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Hexo 框架(二) 美化自己的博客</title>
+      <link href="/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="美化自己的博客"><a href="#美化自己的博客" class="headerlink" title="美化自己的博客"></a>美化自己的博客</h1><h2 id="选择-hexo-主题"><a href="#选择-hexo-主题" class="headerlink" title="选择 hexo 主题"></a>选择 hexo 主题</h2><p>1.修改站点配置文件</p><p>本主题选择的是 <a href="https://volantis.js.org/">volantis</a></p><blockquote><p>在 <code>blog/_config.yml</code> 文件中配置</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;theme: volantis</span><br></pre></td></tr></table></figure></blockquote><blockquote><p>在终端中输入：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;npm i hexo-theme-volantis</span><br></pre></td></tr></table></figure></blockquote><h2 id="美化博客"><a href="#美化博客" class="headerlink" title="美化博客"></a>美化博客</h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Golang 写工具类代码的顺序</title>
       <link href="/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/"/>
       <url>/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/</url>
@@ -14,7 +33,7 @@
       
         <tags>
             
-            <tag> Go </tag>
+            <tag> Golang </tag>
             
         </tags>
       

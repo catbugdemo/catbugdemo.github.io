@@ -510,15 +510,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h1 id="搭建自己的博客"><a href="#搭建自己的博客" class="headerlink" title="搭建自己的博客"></a>搭建自己的博客</h1><h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><p><strong>1. 安装nodejs</strong> </p>
-<blockquote>
+  <h1 id="搭建自己的博客"><a href="#搭建自己的博客" class="headerlink" title="搭建自己的博客"></a>搭建自己的博客</h1><h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><h3 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1. 安装nodejs"></a><strong>1. 安装nodejs</strong></h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/nodejs/nodejs-install-setup.html">参考nodejs</a></p>
 </blockquote>
 <ul>
 <li>可能会遇到的问题<br><strong>nodejs 版本过高</strong><br>: 可以使用 npm 进行版本控制<br>: &gt;<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34051201/article/details/89093598">参考地址</a></li>
 </ul>
-<p><strong>2. 安装,使用git</strong></p>
-<blockquote>
+<h3 id="2-安装-使用git"><a href="#2-安装-使用git" class="headerlink" title="2. 安装,使用git"></a><strong>2. 安装,使用git</strong></h3><blockquote>
 <p><a target="_blank" rel="noopener" href="https://git-scm.com/download/win">安装地址</a> </p>
 </blockquote>
 <ul>
@@ -530,18 +528,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>输入 </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 <p>当出现 <code>Hi,你的GitHub名称</code> 时成功</p>
-<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><ol>
-<li><p>使用 npm 命令安装Hexo</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></li>
-<li><p>初始化博客</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure></li>
-<li><p>新建一个博客内容</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo new 的缩写</span></span><br><span class="line">hexo n 第一个博客</span><br></pre></td></tr></table></figure></li>
-<li><p>开启hexo</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo generate 的缩写</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hexo server 的缩写 启动项目 ，如果要后台运行 hexo s &amp; ,默认地址 localhost:4000</span></span><br><span class="line">hexo s </span><br></pre></td></tr></table></figure></li>
-<li><p>查看地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost:4000</span><br><span class="line"># 或者 ip:4000</span><br></pre></td></tr></table></figure></li>
-</ol>
+<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><h3 id="1-使用-npm-命令安装Hexo"><a href="#1-使用-npm-命令安装Hexo" class="headerlink" title="1. 使用 npm 命令安装Hexo"></a>1. 使用 npm 命令安装Hexo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-初始化博客"><a href="#2-初始化博客" class="headerlink" title="2. 初始化博客"></a>2. 初始化博客</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-新建一个博客内容"><a href="#3-新建一个博客内容" class="headerlink" title="3. 新建一个博客内容"></a>3. 新建一个博客内容</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo new 的缩写</span></span><br><span class="line">hexo n 第一个博客</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-开启hexo"><a href="#4-开启hexo" class="headerlink" title="4. 开启hexo"></a>4. 开启hexo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> hexo generate 的缩写</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hexo server 的缩写 启动项目 ，如果要后台运行 hexo s &amp; ,默认地址 localhost:4000</span></span><br><span class="line">hexo s </span><br></pre></td></tr></table></figure>
+
+<h3 id="5-查看地址"><a href="#5-查看地址" class="headerlink" title="5. 查看地址"></a>5. 查看地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost:4000</span><br><span class="line"># 或者 ip:4000</span><br></pre></td></tr></table></figure>
+
+
+
 
   
   
@@ -576,7 +574,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-28T15:17:26+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-28T16:29:20+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2021年7月28日</p>
@@ -706,7 +704,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-text">前置准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="toc-text">安装 Hexo</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-text">前置准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85nodejs"><span class="toc-text">1. 安装nodejs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85-%E4%BD%BF%E7%94%A8git"><span class="toc-text">2. 安装,使用git</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="toc-text">安装 Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-npm-%E5%91%BD%E4%BB%A4%E5%AE%89%E8%A3%85Hexo"><span class="toc-text">1. 使用 npm 命令安装Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8D%9A%E5%AE%A2"><span class="toc-text">2. 初始化博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9"><span class="toc-text">3. 新建一个博客内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BC%80%E5%90%AFhexo"><span class="toc-text">4. 开启hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9F%A5%E7%9C%8B%E5%9C%B0%E5%9D%80"><span class="toc-text">5. 查看地址</span></a></li></ol></li></ol>
     </div>
   </section>
 

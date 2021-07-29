@@ -22,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>猫猫虫的博客</title>
+  <title>学习go-cache - 猫猫虫的博客</title>
+  
+    <meta name="keywords" content="Golang">
   
 
   
@@ -444,19 +446,71 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   
+    <div class='headimg-div'>
+      <a class='headimg-a'>
+        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0go-cache.jpeg'/>
+      </a>
+    </div>
+  
   <div class="article-meta" id="top">
     
     
+    
+      <h1 class="title">
+        学习go-cache
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>猫猫虫</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年7月29日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="学习go-cache" data-path="/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
     
   </div>
 
 
   
   
-  <hr>
-<p>headimg: <a target="_blank" rel="noopener" href="https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0go-cache.jpeg">https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0go-cache.jpeg</a><br>title: 学习go-cache<br>date: 2021-07-29 13:45:02<br>tags: Golang<br>layout: post</p>
-<hr>
-<h2 id="Copy-go-cache-学习缓存的前置知识"><a href="#Copy-go-cache-学习缓存的前置知识" class="headerlink" title="Copy go-cache 学习缓存的前置知识"></a>Copy go-cache 学习缓存的前置知识</h2><blockquote>
+  <h2 id="Copy-go-cache-学习缓存的前置知识"><a href="#Copy-go-cache-学习缓存的前置知识" class="headerlink" title="Copy go-cache 学习缓存的前置知识"></a>Copy go-cache 学习缓存的前置知识</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/patrickmn/go-cache">go-cache代码地址</a></p>
 </blockquote>
 <h3 id="1-什么是读锁，什么是写锁，sync-Mutex-和-sync-RWMutex-的区别"><a href="#1-什么是读锁，什么是写锁，sync-Mutex-和-sync-RWMutex-的区别" class="headerlink" title="1.什么是读锁，什么是写锁，sync.Mutex 和 sync.RWMutex 的区别"></a>1.什么是读锁，什么是写锁，sync.Mutex 和 sync.RWMutex 的区别</h3><blockquote>
@@ -531,7 +585,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-29T19:15:59+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-29T19:16:43+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2021年7月29日</p>
@@ -542,6 +596,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Golang</p></a></div>
+
 
         
       
@@ -553,7 +610,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title= - 猫猫虫的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title=学习go-cache - 猫猫虫的博客&summary="
           
           >
           
@@ -565,7 +622,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title= - 猫猫虫的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title=学习go-cache - 猫猫虫的博客&summary="
           
           >
           
@@ -577,7 +634,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title= - 猫猫虫的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/&title=学习go-cache - 猫猫虫的博客&summary="
           
           >
           
@@ -679,8 +736,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="学习go-cache";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

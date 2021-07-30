@@ -530,7 +530,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="3-New"><a href="#3-New" class="headerlink" title="3.New"></a>3.New</h3><p>go-cache 中包含 1 个对外的New 和两个内部创建结构体</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// newCache 该方法真正返回 cache 结构体</span></span><br><span class="line"><span class="comment">// de 设置过期时间 ，m 存储的数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newCache</span><span class="params">(de time.Duration, m <span class="keyword">map</span>[<span class="keyword">string</span>]Item)</span> *<span class="title">cache</span></span> &#123;</span><br><span class="line">	<span class="comment">// 如果过期时间是0，创建永久时间</span></span><br><span class="line">	<span class="keyword">if</span> de == <span class="number">0</span> &#123;</span><br><span class="line">		de = <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;cache&#123;</span><br><span class="line">		defaultExpiration: de,</span><br><span class="line">		items:             m,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法用来运行缓存回收</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newCacheWithJanitor</span><span class="params">(de, ci time.Duration, m <span class="keyword">map</span>[<span class="keyword">string</span>]Item)</span> *<span class="title">Cache</span></span> &#123;</span><br><span class="line">	c := newCache(de, m)</span><br><span class="line"></span><br><span class="line">	C := &amp;Cache&#123;c&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ci &gt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="comment">// 运行垃圾回收方法，之后会写</span></span><br><span class="line">		runJanitor(c,ci)</span><br><span class="line">		<span class="comment">// 设置垃圾回收,stopJanitor 也是之后写的停止运行缓存回收</span></span><br><span class="line">		runtime.SetFinalizer(C,stopJanitor)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> C</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// New</span></span><br><span class="line"><span class="comment">// defaultExpiration 设置所有缓存的默认过期时间</span></span><br><span class="line"><span class="comment">// cleanInterval 设置缓存清理间隔时间</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(defaultExpiration, cleanInterval time.Duration)</span> *<span class="title">Cache</span></span> &#123;</span><br><span class="line">	items := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]Item)</span><br><span class="line">	<span class="keyword">return</span> newCacheWithJanitor(defaultExpiration, cleanInterval, items)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="4-编写主方法"><a href="#4-编写主方法" class="headerlink" title="4.编写主方法"></a>4.编写主方法</h3><h4 id="1-获取"><a href="#1-获取" class="headerlink" title="1.获取"></a>1.获取</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Get 获取 该数据为,开启读锁是为了保证读取数据的原子性</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *cache)</span> <span class="title">Get</span><span class="params">(k <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	c.mu.RLock()</span><br><span class="line">	<span class="keyword">defer</span> c.mu.Unlock()</span><br><span class="line">	item, found := c.items[k]</span><br><span class="line">	<span class="keyword">if</span> !found &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果设置了过期时间,判断是否过期</span></span><br><span class="line">	<span class="keyword">if</span> item.Expiration &gt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> time.Now().UnixNano() &gt; item.Expiration &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> item.Object, <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// get 不需要读写锁的原因是因为调用该方法的前置方法已经开启了锁</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *cache)</span> <span class="title">get</span><span class="params">(k <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	item, found := c.items[k]</span><br><span class="line">	<span class="keyword">if</span> !found &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> item.Expiration &gt; <span class="number">0</span> &#123; <span class="comment">//设置了过期时间，但是过期了</span></span><br><span class="line">		<span class="keyword">if</span> time.Now().UnixNano() &gt; item.Expiration &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> item.Object, <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="4-编写主方法"><a href="#4-编写主方法" class="headerlink" title="4.编写主方法"></a>4.编写主方法</h3><h4 id="1-获取"><a href="#1-获取" class="headerlink" title="1.获取"></a>1.获取</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Get 获取 该数据为,开启读锁是为了保证读取数据的原子性</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *cache)</span> <span class="title">Get</span><span class="params">(k <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	c.mu.RLock()</span><br><span class="line">	<span class="keyword">defer</span> c.mu.RUnlock()</span><br><span class="line">	item, found := c.items[k]</span><br><span class="line">	<span class="keyword">if</span> !found &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果设置了过期时间,判断是否过期</span></span><br><span class="line">	<span class="keyword">if</span> item.Expiration &gt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> time.Now().UnixNano() &gt; item.Expiration &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> item.Object, <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// get 不需要读写锁的原因是因为调用该方法的前置方法已经开启了锁</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *cache)</span> <span class="title">get</span><span class="params">(k <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	item, found := c.items[k]</span><br><span class="line">	<span class="keyword">if</span> !found &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> item.Expiration &gt; <span class="number">0</span> &#123; <span class="comment">//设置了过期时间，但是过期了</span></span><br><span class="line">		<span class="keyword">if</span> time.Now().UnixNano() &gt; item.Expiration &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> item.Object, <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h4 id="2-添加"><a href="#2-添加" class="headerlink" title="2.添加"></a>2.添加</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set (添加) 该方法因为在外部层面需要保证数据的一致性，防止多个操作</span></span><br><span class="line"><span class="comment">// 该方法伟伦是否有值，都会重新设置</span></span><br><span class="line"><span class="comment">// k - key , x - value , d - 过期时间</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c cache)</span> <span class="title">Set</span><span class="params">(k <span class="keyword">string</span>, x <span class="keyword">interface</span>&#123;&#125;, d time.Duration)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 最后需要存入的数据内容</span></span><br><span class="line">	<span class="keyword">var</span> e <span class="keyword">int64</span></span><br><span class="line">	<span class="comment">// 如果为 0，则设置为之前设置的默认过期时间</span></span><br><span class="line">	<span class="keyword">if</span> d == DefaultExpiration &#123;</span><br><span class="line">		d = c.defaultExpiration</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 设置过期时间从当前时间开始</span></span><br><span class="line">	<span class="keyword">if</span> d &gt; <span class="number">0</span> &#123;</span><br><span class="line">		e = time.Now().Add(d).UnixNano()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 添加写锁，保证数据的原子性,并写入内容</span></span><br><span class="line">	c.mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> c.mu.Unlock()</span><br><span class="line">	c.items[k] = Item&#123;</span><br><span class="line">		Object:     x, <span class="comment">//存储内容</span></span><br><span class="line">		Expiration: e, <span class="comment">//过期时间</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// set 与 Set 相同，因为作用在 Add 中 已经加了锁，所以不需要加锁</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *cache)</span> <span class="title">set</span><span class="params">(k <span class="keyword">string</span>, x <span class="keyword">interface</span>&#123;&#125;, d time.Duration)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> e <span class="keyword">int64</span></span><br><span class="line">	<span class="keyword">if</span> d == DefaultExpiration &#123;</span><br><span class="line">		d = c.defaultExpiration</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> d &gt; <span class="number">0</span> &#123;</span><br><span class="line">		e = time.Now().Add(d).UnixNano()</span><br><span class="line">	&#125;</span><br><span class="line">	c.items[k] = Item&#123;</span><br><span class="line">		Object:     x,</span><br><span class="line">		Expiration: e,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add 如果数据存在则不会进行操作</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c cache)</span> <span class="title">Add</span><span class="params">(k <span class="keyword">string</span>, x <span class="keyword">interface</span>&#123;&#125;, d time.Duration)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	c.mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> c.mu.Unlock()</span><br><span class="line">	<span class="keyword">if</span> _, found := c.get(k); found &#123; <span class="comment">// 已经存储了数据</span></span><br><span class="line">		<span class="keyword">return</span> fmt.Errorf(<span class="string">&quot;Item %s already exists&quot;</span>, k)</span><br><span class="line">	&#125;</span><br><span class="line">	c.set(k, x, d)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -585,10 +585,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-29T19:16:43+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-07-30T13:41:29+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年7月29日</p>
+    <p>更新于：2021年7月30日</p>
   </a>
 </div>
 
@@ -764,6 +764,22 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="aplayer-container">
           
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='3175833810'
+      list-folded='true'>
+    </meting-js>
+  
 
 
         </div>
@@ -1154,6 +1170,26 @@ var loadCSS = function( href, before, media, attributes ){
         
       
         
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
       
     </ul>
   </div>
@@ -1257,6 +1293,11 @@ var loadCSS = function( href, before, media, attributes ){
         }
       }
       // 有音乐播放器 see: layout/_third-party/aplayer/script.ejs
+      
+      if(volantis.APlayerLoaded){ // APlayer加载完成？
+        // 如果有aplayer，初始化一下
+        checkAPlayer();
+      }
       
       return false; // 该行代码确保系统自带的右键菜单不会被调出
     }
@@ -1400,6 +1441,32 @@ var loadCSS = function( href, before, media, attributes ){
 
 
 
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '3175833810';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+  
+    loadScript("/js/aplayer.js")
+  
+
+</script>
 
 
 

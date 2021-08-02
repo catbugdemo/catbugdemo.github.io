@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2021 - 猫猫虫的博客</title>
+  <title>部署 Rocket MQ - 猫猫虫的博客</title>
+  
+    <meta name="keywords" content="Rocket MQ">
   
 
   
@@ -106,7 +106,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  search' style="display: ;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -441,366 +441,260 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-	
-		
-  <section class="post-list">
-    
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
+  <article class="article post white-box reveal md shadow blur article-type-post" id="post" itemscope itemprop="blogPost">
   
-  
+
+
   
     <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/">
+      <a class='headimg-a'>
         <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E9%83%A8%E7%BD%B2%20Rocket%20MQ.jpeg'/>
       </a>
     </div>
   
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        部署 Rocket MQ
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>猫猫虫</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年8月2日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="部署 Rocket MQ" data-path="/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>rocket MQ 主要存在几种部署模式，因为现在是在学习中，所以我们部署 rocket MQ 单机模式</li>
+</ul>
+<h2 id="部署-Rocket-MQ-单机模式"><a href="#部署-Rocket-MQ-单机模式" class="headerlink" title="部署 Rocket MQ 单机模式"></a>部署 Rocket MQ 单机模式</h2><h3 id="1-准备"><a href="#1-准备" class="headerlink" title="1.准备"></a>1.准备</h3><ul>
+<li>安装 jdk 8+</li>
+<li>安装 Maven 3.2.X+</li>
+<li>安装 git</li>
+</ul>
+<h3 id="2-安装-Rocket-MQ"><a href="#2-安装-Rocket-MQ" class="headerlink" title="2.安装 Rocket MQ"></a>2.安装 Rocket MQ</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget http://mirror.bit.edu.cn/apache/rocketmq/4.7.1/rocketmq-all-4.7.1-source-release.zip</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> unzip rocketmq-all-4.7.1-source-release.zip</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 Maven 编译 RocketMQ 源码</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> rocketmq-all-4.7.1-source-release</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mvn -Prelease-all -DskipTests clean install -U</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 因为 broker 启动时需要占用大量内存，可以修改配置文件减小先消耗内存</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改目录 bin 下 runserver.sh 文件</span></span><br><span class="line"> JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms256m -Xmx256m -Xmn128m -XX:PermSize=128m -XX:MaxPermSize=320m&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 runbroker.sh 文件</span></span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms256m -Xmx256m -Xmn128m&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 tools.sh 文件</span></span><br><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125; -server -Xms256m -Xmx256m -Xmn128m -XX:PermSize=128m -XX:MaxPermSize=128m&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-启动-rocketmq"><a href="#3-启动-rocketmq" class="headerlink" title="3.启动 rocketmq"></a>3.启动 rocketmq</h3><h4 id="1-启动-nameserver"><a href="#1-启动-nameserver" class="headerlink" title="1.启动 nameserver"></a>1.启动 nameserver</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将日志打印在 logs 文件中</span></span><br><span class="line">mkdir logs</span><br><span class="line">nohup mqnamesrv 1&gt;/root/utils/rocketmq-all-4.7.0-bin-release/logs/ng.log 2&gt;/root/utils/rocketmq-all-4.7.0-bin-release/logs/ng-err.log &amp; </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> jps 查看是否启动成功</span></span><br><span class="line"><span class="meta">$</span><span class="bash">jps</span></span><br><span class="line"></span><br><span class="line">29515 BrokerStartup</span><br><span class="line">29516 NamesrvStartup</span><br><span class="line">5982 Jps</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> jps 命令启动 rocket MQ 会通过私有 ip 启动，导致客户端无法远程连接,所以启动之前修改配置文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查询命令 find ~/rocketmq-all-4.7.0-source-release -name broker.conf</span></span><br><span class="line"></span><br><span class="line">vim ./distribution/conf/broker.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加</span> </span><br><span class="line">namesrvAddr = 公网IP地址:9876</span><br><span class="line">brokerIP1 = 公网IP地址</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-启动-broker"><a href="#2-启动-broker" class="headerlink" title="2.启动 broker"></a>2.启动 broker</h4><p> 4.8版本后 bin 地址一般在 rocketmq/distribution 中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> nohup sh bin/mqbroker 1&gt;/root/utils/rocketmq-all-4.7.0-bin-release/logs/mq.log -n 118.89.121.211:9876 autoCreateTopicEnable=true -c /root/utils/rocketmq-all-4.7.0-bin-release/conf/broker.conf &amp;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> jps 查看</span></span><br><span class="line">8448 Jps</span><br><span class="line">29515 BrokerStartup</span><br><span class="line">29516 NamesrvStartup</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-模拟"><a href="#3-模拟" class="headerlink" title="3.模拟"></a>3.模拟</h3><h4 id="1-模拟生产者"><a href="#1-模拟生产者" class="headerlink" title="1.模拟生产者"></a>1.模拟生产者</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">export NAMESRV_ADDR=127.0.0.1:9876</span><br><span class="line">sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-模拟消费者"><a href="#2-模拟消费者" class="headerlink" title="2.模拟消费者"></a>2.模拟消费者</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-关闭-RocketMQ"><a href="#4-关闭-RocketMQ" class="headerlink" title="4.关闭 RocketMQ"></a>4.关闭 RocketMQ</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mqshutdown namesrv       #关闭nameserver</span><br><span class="line">mqshutdown broker          #关闭broker</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-通过控制台连接-rocketmq"><a href="#5-通过控制台连接-rocketmq" class="headerlink" title="5.通过控制台连接 rocketmq"></a>5.通过控制台连接 rocketmq</h3><h4 id="1-下载"><a href="#1-下载" class="headerlink" title="1.下载"></a>1.下载</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console">参考地址</a></p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/rocketmq-externals.git</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd rocketmq-exxternals/rocketmq-console/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 maven 项目的资源文件</span></span><br><span class="line">vim src/main/resource/application.properties</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改</span></span><br><span class="line">server.port=9877</span><br><span class="line">rocketmq.config.namesrvAddr=127.0.0.1:9876</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-打包运行"><a href="#3-打包运行" class="headerlink" title="3.打包运行"></a>3.打包运行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">pwd</span></span></span><br><span class="line">~ /rocketmq-exxternals/rocketmq-console/</span><br><span class="line"></span><br><span class="line">mvn clean package -Dmaven.test.skip=true</span><br><span class="line">java -jar target/rocketmq-console-ng-2.0.0.jar &gt;logs/console.log &amp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h3><h4 id="1-nohup-空格即退出"><a href="#1-nohup-空格即退出" class="headerlink" title="1. nohup 空格即退出"></a>1. nohup 空格即退出</h4><blockquote>
+<p>没有配置好 bin 中的 sh 的 Xms 等最大容量</p>
+</blockquote>
+<h4 id="2-closeChannel-close-the-connection-to-remote-address-result-true"><a href="#2-closeChannel-close-the-connection-to-remote-address-result-true" class="headerlink" title="2.closeChannel: close the connection to remote address[] result: true"></a>2.closeChannel: close the connection to remote address[] result: true</h4><blockquote>
+<p>没有开放 10909, 10911 端口<br><a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq/issues/568">参考地址</a></p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jing99/p/13166602.html">https://www.cnblogs.com/jing99/p/13166602.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/lumengmeng_csdn/article/details/87855335">https://blog.csdn.net/lumengmeng_csdn/article/details/87855335</a></p>
+
+  
   
     
-    <h2 class="article-title" >
-      <a href="/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/">
-        部署 Rocket MQ
-      </a>
-    </h2>
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/>http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
   
-  <div class='md'>
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-08-02T21:11:56+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年8月2日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Rocket-MQ/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Rocket MQ</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
       
-        前言
-rocket MQ 主要存在几种部署模式，因为现在是在学习中，所以我们部署 rocket MQ 单机模式
-
-部署 Rocket MQ 单机模式1.准备
-安装 jdk 8+
-安装 Maven 3.2.X+
-安装 git
-
-2.安装 Rocket MQ123456789101112131415161718# 下载$ wget http://mirror.bit.edu.cn/apache/...
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/&title=部署 Rocket MQ - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/&title=部署 Rocket MQ - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/&title=部署 Rocket MQ - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
       
     
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-08-02</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/08/02/%E9%83%A8%E7%BD%B2-Rocket-MQ/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
 </div>
 
-          </div>
+
+
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0go-cache.jpeg'/>
-      </a>
     </div>
+  </div>
+
+
   
   
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/">
-        学习go-cache
-      </a>
-    </h2>
+
   
-  <div class='md'>
-    
+    <div class="prev-next">
       
-        Copy go-cache 学习缓存的前置知识
+      
+        <a class='next' href='/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/'>
+          <p class='title'>学习go-cache<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Copy go-cache 学习缓存的前置知识
 go-cache代码地址
 
 1.什么是读锁，什么是写锁，sync.Mutex 和 sync.RWMutex 的区别
 参考地址
 
-2.go runtime 协程
-参考地址
-
-3. Golang time 和 runtime 包
-参考地址
-
-写 go-cache 的顺序1.确定数据需要存储的内容和其过期时间2.将cache封装为一个结构体3.New...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-29</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/'>
-            阅读全文
-          </a>
-        </div>
+2.go runt...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow blur" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/hexo2.png'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-        Hexo 框架(二) 美化自己的博客
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        选择 hexo 主题1.修改站点配置文件
-本主题选择的是 volantis
-
-在 blog/_config.yml 文件中配置
-1theme: volantis
+  </article>
 
 
-在终端中输入：
-1npm i hexo-theme-volantis
-
-美化博客1.设置封面背景打开 `blog/node_module/hexo-theme-volantis/_config.yml` 或者 `blog/the...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-28</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/Golang%20%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F.png'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/">
-        Golang 写工具类代码的顺序
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Golang 中 自己总结出来的关于如何写代码工具的顺序1.定义结构体(需要封装哪些数据和数据类型)2.func New() (用来创建该结构体)3.确定该工具需要实现的功能4.写代码5.测试6.完善补全代码7.测试8.发布
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-27</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/hexo1.png'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-        Hexo 框架(一) 搭建自己的博客
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前置准备1. 安装nodejs
-参考nodejs
 
 
-可能会遇到的问题nodejs 版本过高: 可以使用 npm 进行版本控制: &gt;参考地址
-
-2. 安装,使用git
-安装地址 
 
 
-设置 user.name 和 user.email12git config --global user.name &quot;你的GitHub用户名&quot;git config --global us...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-27</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/27/hello-world/">
-        Hello world
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-07-27</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/07/27/hello-world/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
-
-
-	
 </div>
 <aside class='l_side'>
   
@@ -808,250 +702,28 @@ Qu...
     
     
 
-<section class="widget blogger shadow blur desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/'>
-          <img no-lazy src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E4%BD%9C%E8%80%85%E5%A4%B4%E5%83%8F.jpeg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>猫猫虫</h2>
-        
-        
-        
-          <p><span id="jinrishici-sentence">猫猫虫的博客</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@xxx.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/catbugdemo"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-<section class="widget shadow blur desktop">
-  
-  <header>
-    
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
-    
-  </header>
 
 
-  <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>6 篇</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2021/07/25'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Mon Aug 02 2021 21:59:02 GMT+0800 (GMT+08:00)</div>
-            <div id="last-update-show">2021-08-02 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2021-08-02 日';
-          }
-        </script>
-        
-      
-    </div>
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow blur desktop mobile">
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/Golang/" style="font-size: 24px; color: #555">Golang</a> <a href="/tags/Rocket-MQ/" style="font-size: 14px; color: #999">Rocket MQ</a> <a href="/tags/hexo/" style="font-size: 24px; color: #555">hexo</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2-Rocket-MQ-%E5%8D%95%E6%9C%BA%E6%A8%A1%E5%BC%8F"><span class="toc-text">部署 Rocket MQ 单机模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87"><span class="toc-text">1.准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85-Rocket-MQ"><span class="toc-text">2.安装 Rocket MQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8-rocketmq"><span class="toc-text">3.启动 rocketmq</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%90%AF%E5%8A%A8-nameserver"><span class="toc-text">1.启动 nameserver</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%90%AF%E5%8A%A8-broker"><span class="toc-text">2.启动 broker</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E6%8B%9F"><span class="toc-text">3.模拟</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%A8%A1%E6%8B%9F%E7%94%9F%E4%BA%A7%E8%80%85"><span class="toc-text">1.模拟生产者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A8%A1%E6%8B%9F%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-text">2.模拟消费者</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B3%E9%97%AD-RocketMQ"><span class="toc-text">4.关闭 RocketMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%80%9A%E8%BF%87%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BF%9E%E6%8E%A5-rocketmq"><span class="toc-text">5.通过控制台连接 rocketmq</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD"><span class="toc-text">1.下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE"><span class="toc-text">2.配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%89%93%E5%8C%85%E8%BF%90%E8%A1%8C"><span class="toc-text">3.打包运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">出现的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-nohup-%E7%A9%BA%E6%A0%BC%E5%8D%B3%E9%80%80%E5%87%BA"><span class="toc-text">1. nohup 空格即退出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-closeChannel-close-the-connection-to-remote-address-result-true"><span class="toc-text">2.closeChannel: close the connection to remote address[] result: true</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-    
-    
-
-<section class="widget qrcode shadow blur desktop mobile">
-  
-
-  <div class='content article-entry'>
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-  </div>
-</section>
-
-  
-
 
 </aside>
+
 
 
 		  
@@ -1060,21 +732,21 @@ Qu...
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="部署 Rocket MQ";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="half";
-    cover_wrapper.style.display="";
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
     
   
 </script>

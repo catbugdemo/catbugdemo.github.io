@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -22,9 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>Golang 写工具类代码的顺序 - 猫猫虫的博客</title>
-  
-    <meta name="keywords" content="Golang">
+  <title>标签：计算机基础 - 猫猫虫的博客</title>
   
 
   
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper post search' style="display: none;">
+        <div id="full" class='cover-wrapper  search' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -440,240 +440,87 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
+
 <div class='l_main'>
-  <article class="article post white-box reveal md shadow blur article-type-post" id="post" itemscope itemprop="blogPost">
   
-
-
+    
+      
+  <section class="post-list">
+    
+      
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow blur">
+  
+  
   
     <div class='headimg-div'>
-      <a class='headimg-a'>
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/Golang%20%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F.png'/>
+      <a class='headimg-a' href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97.jpeg'/>
       </a>
     </div>
   
-  <div class="article-meta" id="top">
+  
     
+    <h2 class="article-title" >
+      <a href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
+        学习位运算
+      </a>
+    </h2>
+  
+  <div class='md'>
     
-    
-      <h1 class="title">
-        Golang 写工具类代码的顺序
-      </h1>
-      <div class='new-meta-box'>
-        
-          
-            
-<div class='new-meta-item author'>
-  <a class='author' href="/" rel="nofollow">
-    <img no-lazy src="">
-    <p>猫猫虫</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年7月27日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  <div class="new-meta-item browse leancloud">
-    <a class='notlink'>
       
-      <div id="lc-pv" data-title="Golang 写工具类代码的顺序" data-path="/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/">
-        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
-        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-        次浏览
-      </div>
-    </a>
-  </div>
+        前言
+最近在学习 golang 的时候发现一个代码，发现看不懂
+
+12345678910const (	read byte = 1 &lt;&lt; iota	wirte	exec)func main() &#123;	b := read | exec	fmt.Println(b)	// Output: 5&#125;
 
 
-          
-        
-      </div>
+看不懂是因为 不知道 | 是什么意思
+另一方面则是计算机基础不牢固
+...
+      
     
   </div>
-
-
   
-  
-  <h2 id="Golang-中-自己总结出来的关于如何写代码工具的顺序"><a href="#Golang-中-自己总结出来的关于如何写代码工具的顺序" class="headerlink" title="Golang 中 自己总结出来的关于如何写代码工具的顺序"></a>Golang 中 自己总结出来的关于如何写代码工具的顺序</h2><p>1.定义结构体(需要封装哪些数据和数据类型)<br>2.func New() (用来创建该结构体)<br>3.确定该工具需要实现的功能<br>4.写代码<br>5.测试<br>6.完善补全代码<br>7.测试<br>8.发布</p>
-
-  
-  
-    
-    <div class='footer'>
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time>2021-09-09</time>
+        
+      </div>
       
-      
-      
-        <div class='copyright'>
-          <blockquote>
-            
-              
-                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
-
-              
-            
-              
-                <p>本文永久链接是：<a href=http://example.com/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/>http://example.com/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/</a></p>
-              
-            
-          </blockquote>
+        <div>
+          <a class='readmore' href='/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/'>
+            阅读全文
+          </a>
         </div>
       
-      
     </div>
   
-  
-    
 
-
-  <div class='article-meta' id="bottom">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-09-09T09:54:13+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年9月9日</p>
-  </a>
 </div>
 
+          </div>
         
       
-        
-          
+    
+  </section>
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Golang</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
     
-      
-        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/&title=Golang 写工具类代码的顺序 - 猫猫虫的博客&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/&title=Golang 写工具类代码的顺序 - 猫猫虫的博客&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
-          
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/07/27/Golang-%E5%86%99%E5%B7%A5%E5%85%B7%E7%B1%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A1%BA%E5%BA%8F/&title=Golang 写工具类代码的顺序 - 猫猫虫的博客&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
-          
-        </a>
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-
-
-
-        
-      
-    </div>
-  </div>
-
-
-  
   
 
-  
-    <div class="prev-next">
-      
-        <a class='prev' href='/2021/07/28/Hexo-%E6%A1%86%E6%9E%B6-%E4%BA%8C-%E7%BE%8E%E5%8C%96%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Hexo 框架(二) 美化自己的博客</p>
-          <p class='content'>选择 hexo 主题1.修改站点配置文件
-本主题选择的是 volantis
 
-在 blog/_config.yml 文件中配置
-1theme: volantis
-
-
-在终端中输入：
-1npm i...</p>
-        </a>
-      
-      
-        <a class='next' href='/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/'>
-          <p class='title'>Hexo 框架(一) 搭建自己的博客<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>前置准备1. 安装nodejs
-参考nodejs
-
-
-可能会遇到的问题nodejs 版本过高: 可以使用 npm 进行版本控制: &gt;参考地址
-
-2. 安装,使用git
-安装地址 
-
-
-设置...</p>
-        </a>
-      
-    </div>
-  
-</article>
-
-
-  
-
-  <article class="post white-box reveal shadow blur" id="comments">
-    <p ct><i class='fas fa-comments'></i> 评论</p>
     
-    <div id="valine_container" class="valine_thread">
-  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
-</div>
-
-  </article>
-
-
-
-
-
-
+  
 </div>
 <aside class='l_side'>
   
@@ -681,28 +528,250 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
+<section class="widget blogger shadow blur desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box rectangle' href='/'>
+          <img no-lazy src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E4%BD%9C%E8%80%85%E5%A4%B4%E5%83%8F.jpeg'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+          <h2>猫猫虫</h2>
+        
+        
+        
+          <p><span id="jinrishici-sentence">猫猫虫的博客</span></p>
+          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="mailto:me@xxx.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="https://github.com/catbugdemo"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+          
+            <a href="/"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+              
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget shadow blur desktop">
+  
+  <header>
+    
+      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
+    
+  </header>
 
 
-  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
+  <div class='content'>
+    <div class="webinfo">
+      
+        <div class="webinfo-item">
+          <div>文章数目：</div>
+          <div>10 篇</div>
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>已运行时间：</div>
+          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
+        </div>
+        <script>
+          var BirthDay = new Date(new Date('2021/07/25'));
+          var today = new Date();
+          var timeold = (today.getTime() - BirthDay.getTime());
+          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
+          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
+        </script>
+      
+
+
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站访客数：</div>
+          
+          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
+          
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>本站总访问量：</div>
+          
+          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
+          
+        </div>
+      
+
+      
+        <div class="webinfo-item">
+          <div>最后活动时间：</div>
+          
+            <div id="last-update" style="display: none;">Thu Sep 09 2021 09:54:33 GMT+0800 (GMT+08:00)</div>
+            <div id="last-update-show">2021-09-09 日</div>
+          
+        </div>
+        
+        <script>
+          function timeago(dateTimeStamp) {
+              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
+              var hour = minute * 60;
+              var day = hour * 24;
+              var week = day * 7;
+              var month = day * 30;
+              var now = new Date().getTime(); //获取当前时间毫秒
+              var diffValue = now - dateTimeStamp; //时间差
+              if (diffValue < 0) {
+                  return;
+              }
+              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
+              var hourC = diffValue / hour;
+              var dayC = diffValue / day;
+              var weekC = diffValue / week;
+              var monthC = diffValue / month;
+              if (monthC >= 1 && monthC <= 3) {
+                  result = " " + parseInt(monthC) + " 月前"
+              } else if (weekC >= 1 && weekC <= 3) {
+                  result = " " + parseInt(weekC) + " 周前"
+              } else if (dayC >= 1 && dayC <= 6) {
+                  result = " " + parseInt(dayC) + " 天前"
+              } else if (hourC >= 1 && hourC <= 23) {
+                  result = " " + parseInt(hourC) + " 小时前"
+              } else if (minC >= 1 && minC <= 59) {
+                  result = " " + parseInt(minC) + " 分钟前"
+              } else if (diffValue >= 0 && diffValue <= minute) {
+                  result = "刚刚"
+              } else {
+                  var datetime = new Date();
+                  datetime.setTime(dateTimeStamp);
+                  var Nyear = datetime.getFullYear();
+                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+                  result = Nyear + "-" + Nmonth + "-" + Ndate
+              }
+              return result;
+          }
+          var lastUpDate = document.getElementById('last-update').innerHTML;
+          try {
+            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
+          } catch (error) {
+            document.getElementById('last-update-show').innerHTML = '2021-09-09 日';
+          }
+        </script>
+        
+      
+    </div>
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+  
+
+  
+    
+    
+  
+
+  <section class="widget tagcloud shadow blur desktop mobile">
     
   <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
     
   </header>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Golang-%E4%B8%AD-%E8%87%AA%E5%B7%B1%E6%80%BB%E7%BB%93%E5%87%BA%E6%9D%A5%E7%9A%84%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E5%86%99%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-text">Golang 中 自己总结出来的关于如何写代码工具的顺序</span></a></li></ol>
+      <a href="/tags/Golang/" style="font-size: 24px; color: #555">Golang</a> <a href="/tags/Rocket-MQ/" style="font-size: 19px; color: #777">Rocket MQ</a> <a href="/tags/hexo/" style="font-size: 19px; color: #777">hexo</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 14px; color: #999">计算机基础</a>
     </div>
   </section>
 
 
   
 
+  
+    
+    
+
+<section class="widget qrcode shadow blur desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
+      
+        height='64px'
+      />
+    
+      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
+      
+        height='64px'
+      />
+    
+  </div>
+</section>
+
+  
+
 
 </aside>
-
 
 
 		  
@@ -711,8 +780,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=true;
-  pdata.postTitle="Golang 写工具类代码的顺序";
+  pdata.ispage=false;
+  pdata.postTitle="";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

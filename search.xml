@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>给日志增加颜色</title>
+      <link href="/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/"/>
+      <url>/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul><li>自己写的日志太单调了，又不想在 日志颜色上花功夫</li><li>试试 github.com/fatih/color</li></ul><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/fatih/color</span><br></pre></td></tr></table></figure><h3 id="2-即开即用"><a href="#2-即开即用" class="headerlink" title="2.即开即用"></a>2.即开即用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出绿色</span></span><br><span class="line">color.Green(<span class="string">&quot;test&quot;</span>)</span><br></pre></td></tr></table></figure><h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><ul><li>待补充</li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="https://github.com/fatih/color">https://github.com/fatih/color</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>单元测试</title>
       <link href="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"/>
       <url>/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>

@@ -22,9 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>给日志增加颜色 - 猫猫虫的博客</title>
+  <title>go-swagger的使用 - 猫猫虫的博客</title>
   
-    <meta name="keywords" content="golang">
+    <meta name="keywords" content="golang,swagger">
   
 
   
@@ -448,7 +448,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class='headimg-div'>
       <a class='headimg-a'>
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2.jpeg'/>
+        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/go-swagger%20%E7%9A%84%E4%BD%BF%E7%94%A8.jpeg'/>
       </a>
     </div>
   
@@ -457,7 +457,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title">
-        给日志增加颜色
+        go-swagger的使用
       </h1>
       <div class='new-meta-box'>
         
@@ -481,7 +481,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年12月3日</p>
+    <p>发布于：2021年12月13日</p>
   </a>
 </div>
 
@@ -492,7 +492,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="给日志增加颜色" data-path="/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/">
+      <div id="lc-pv" data-title="go-swagger的使用" data-path="/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -510,20 +510,44 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>自己写的日志太单调了，又不想在 日志颜色上花功夫</li>
-<li>试试 github.com/fatih/color</li>
+  <h2 id="go-swagger-自动生成文档"><a href="#go-swagger-自动生成文档" class="headerlink" title="go swagger 自动生成文档"></a>go swagger 自动生成文档</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
+<li>在写完代码或者正在写代码的时候，如果要与前端进行同步开发文档是必须的，但是如果在写代码的时候发现接口要改，这个时候为了确保前端能够理解又要修改开发文档，万一忘记改了，可能无法面对前端的质问</li>
+<li>这个时候一个实时同步的开发文档就很重要了</li>
 </ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/fatih/color</span><br></pre></td></tr></table></figure>
+<h2 id="学习使用"><a href="#学习使用" class="headerlink" title="学习使用"></a>学习使用</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 swag 如果不行直接上二进制文件 (国内的连接问题 -- 直接用二进制文件)</span></span><br><span class="line">go get -u github.com/swaggo/swag/cmd/swag</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装 gin-swagger</span></span> </span><br><span class="line">go get github.com/swaggo/gin-swagger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装  swaggerFiles</span></span></span><br><span class="line">go get github.com/swaggo/gin-swagger/swaggerFiles</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-即开即用"><a href="#2-即开即用" class="headerlink" title="2.即开即用"></a>2.即开即用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出绿色</span></span><br><span class="line">color.Green(<span class="string">&quot;test&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><ul>
-<li>待补充</li>
+<h3 id="2-编写注释"><a href="#2-编写注释" class="headerlink" title="2. 编写注释"></a>2. 编写注释</h3><ul>
+<li>编写 main.go 中的注释</li>
 </ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/fatih/color">https://github.com/fatih/color</a></li>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go 中添加注释</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// @title 标题</span></span><br><span class="line"><span class="comment">// @version 1.0 (版本)</span></span><br><span class="line"><span class="comment">// @description 声明（可不写）</span></span><br><span class="line"><span class="comment">// @termsOfService https://www.test.com</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// @contact.name www.test.com</span></span><br><span class="line"><span class="comment">// @contact.url https://www.test.com</span></span><br><span class="line"><span class="comment">// @contact.email me@test.me</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// @license.name Apache 2.0 (必填)</span></span><br><span class="line"><span class="comment">// @license.url http://www.apache.org/licenses/LICENSE-2.0.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// @host 127.0.0.1:8080</span></span><br><span class="line"><span class="comment">// @BasePath </span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意<br>@host  直接调试 API地址<br>@BasePath  基础前缀路径</p>
+</li>
+<li><p>使用命令</p>
+</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">swag init</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">swag init --parseDependency --parseInternal --parseDepth 1 </span><br></pre></td></tr></table></figure>
+<ul>
+<li>在需要编写文档的 func 上</li>
+</ul>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">type</span> LoginReq&#123;</span><br><span class="line">	Code <span class="keyword">string</span> <span class="string">`json:&quot;code&quot;`</span> <span class="comment">// 编码</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// @Summary 获取 code</span></span><br><span class="line"><span class="comment">// @title 后台接口</span></span><br><span class="line"><span class="comment">// @Tags 登录</span></span><br><span class="line"><span class="comment">// @Router /wxapp/login [post]</span></span><br><span class="line"><span class="comment">// @param param body LoginReq true &quot;用户请求参数&quot;</span></span><br><span class="line"><span class="comment">// @Success 200 &#123;object&#125; JsonMsg</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Login</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后再次运行 <code>swag init </code></li>
+</ul>
+<h3 id="3-运行程序-go-run-main-go"><a href="#3-运行程序-go-run-main-go" class="headerlink" title="3. 运行程序 go run main.go"></a>3. 运行程序 <code>go run main.go</code></h3><ul>
+<li>打开 <a target="_blank" rel="noopener" href="http://localhost:8080/swagger/index.html">http://localhost:8080/swagger/index.html</a></li>
+</ul>
+<p><img src="https://cdn.learnku.com/uploads/images/202112/13/81167/hpUvBPbrCC.png!large" alt="go swagger 使用"></p>
+<ul>
+<li>补充<ul>
+<li>如果需要查看 json 内容可以打开 <a target="_blank" rel="noopener" href="http://localhost:8080/swagger/doc.json">http://localhost:8080/swagger/doc.json</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="yapi-swagger-文档管理"><a href="#yapi-swagger-文档管理" class="headerlink" title="yapi + swagger 文档管理"></a>yapi + swagger 文档管理</h2><h3 id="1-打开-yapi-的一个项目至-数据管理"><a href="#1-打开-yapi-的一个项目至-数据管理" class="headerlink" title="1.打开 yapi 的一个项目至 数据管理"></a>1.打开 yapi 的一个项目至 数据管理</h3><p><img src="https://cdn.learnku.com/uploads/images/202112/13/81167/Xsl2HiVfFa.png!large" alt="go swagger 使用"></p>
+<h3 id="2-选择-项目中-docs-swagger-json"><a href="#2-选择-项目中-docs-swagger-json" class="headerlink" title="2.选择 项目中 docs/swagger.json"></a>2.选择 项目中 docs/swagger.json</h3><p><img src="https://cdn.learnku.com/uploads/images/202112/13/81167/7IZoIJCggK.png!large" alt="go swagger 使用"></p>
+<h3 id="3-将-swagger-json-放入-yapi-Swagger数据导入则会自动导入构建好的文档中"><a href="#3-将-swagger-json-放入-yapi-Swagger数据导入则会自动导入构建好的文档中" class="headerlink" title="3. 将 swagger.json 放入 yapi Swagger数据导入则会自动导入构建好的文档中"></a>3. 将 swagger.json 放入 yapi Swagger数据导入则会自动导入构建好的文档中</h3><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.topgoer.com/%E5%85%B6%E4%BB%96/Swagger.html">https://www.topgoer.com/%E5%85%B6%E4%BB%96/Swagger.html</a></li>
 </ul>
 
   
@@ -542,7 +566,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://example.com/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/>http://example.com/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/</a></p>
+                <p>本文永久链接是：<a href=http://example.com/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/>http://example.com/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/</a></p>
               
             
           </blockquote>
@@ -559,10 +583,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-12-03T10:02:34+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-12-13T09:54:46+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年12月3日</p>
+    <p>更新于：2021年12月13日</p>
   </a>
 </div>
 
@@ -571,7 +595,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>golang</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/golang-swagger/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>golang,swagger</p></a></div>
 
 
         
@@ -584,7 +608,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/&title=给日志增加颜色 - 猫猫虫的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/&title=go-swagger的使用 - 猫猫虫的博客&summary="
           
           >
           
@@ -596,7 +620,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/&title=给日志增加颜色 - 猫猫虫的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/&title=go-swagger的使用 - 猫猫虫的博客&summary="
           
           >
           
@@ -608,7 +632,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/&title=给日志增加颜色 - 猫猫虫的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/&title=go-swagger的使用 - 猫猫虫的博客&summary="
           
           >
           
@@ -638,19 +662,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>go-swagger的使用</p>
-          <p class='content'>go swagger 自动生成文档前言
-在写完代码或者正在写代码的时候，如果要与前端进行同步开发文档是必须的，但是如果在写代码的时候发现接口要改，这个时候为了确保前端能够理解又要修改开发文档，万...</p>
-        </a>
       
-      
-        <a class='next' href='/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/'>
-          <p class='title'>单元测试<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+        <a class='next' href='/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/'>
+          <p class='title'>给日志增加颜色<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
           <p class='content'>前言
-单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。
-单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。
-单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身...</p>
+自己写的日志太单调了，又不想在 日志颜色上花功夫
+试试 github.com/fatih/color
+
+使用1.安装1go get github.com/fatih/color
+
+2.即开...</p>
         </a>
       
     </div>
@@ -693,7 +714,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85"><span class="toc-text">1.安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8D%B3%E5%BC%80%E5%8D%B3%E7%94%A8"><span class="toc-text">2.即开即用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95"><span class="toc-text">进阶用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#go-swagger-%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%96%87%E6%A1%A3"><span class="toc-text">go swagger 自动生成文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8"><span class="toc-text">学习使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85"><span class="toc-text">1.安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BC%96%E5%86%99%E6%B3%A8%E9%87%8A"><span class="toc-text">2. 编写注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F-go-run-main-go"><span class="toc-text">3. 运行程序 go run main.go</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yapi-swagger-%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86"><span class="toc-text">yapi + swagger 文档管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%89%93%E5%BC%80-yapi-%E7%9A%84%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E8%87%B3-%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86"><span class="toc-text">1.打开 yapi 的一个项目至 数据管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%89%E6%8B%A9-%E9%A1%B9%E7%9B%AE%E4%B8%AD-docs-swagger-json"><span class="toc-text">2.选择 项目中 docs&#x2F;swagger.json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B0%86-swagger-json-%E6%94%BE%E5%85%A5-yapi-Swagger%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E5%88%99%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%85%A5%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E6%96%87%E6%A1%A3%E4%B8%AD"><span class="toc-text">3. 将 swagger.json 放入 yapi Swagger数据导入则会自动导入构建好的文档中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-text">参考文档</span></a></li></ol>
     </div>
   </section>
 
@@ -712,7 +733,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="给日志增加颜色";
+  pdata.postTitle="go-swagger的使用";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

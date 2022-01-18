@@ -24,7 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>标签：计算机基础 - 猫猫虫的博客</title>
+  <title>归档：2022 - 猫猫虫的博客</title>
   
 
   
@@ -106,7 +106,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  search' style="display: none;">
+        <div id="half" class='cover-wrapper  search' style="display: ;">
           
             <div id='cover-backstretch'></div>
           
@@ -440,11 +440,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
-  
-    
-      
+	
+		
   <section class="post-list">
     
       
@@ -462,16 +460,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
     <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97.jpeg'/>
+      <a class='headimg-a' href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
+        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF.png'/>
       </a>
     </div>
   
   
     
     <h2 class="article-title" >
-      <a href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        学习位运算
+      <a href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
+        golang协程可用模板
       </a>
     </h2>
   
@@ -479,14 +477,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
       
         前言
-最近在学习 golang 的时候发现一个代码，发现看不懂
+在我们使用协程的时候，如果一时想不起来，可以使用写好的模板套用
 
-12345678910const (	read byte = 1 &lt;&lt; iota	wirte	exec)func main() &#123;	b := read | exec	fmt.Println(b)	// Output: 5&#125;
-
-
-看不懂是因为 不知道 | 是什么意思
-另一方面则是计算机基础不牢固
-...
+sync.WaitGroup1234567891011121314151617func FuncName(list []List)&#123;    var wg sync.WaitGroup    wg.Add(len(list))    for i,v range list &#123;        go func...
       
     
   </div>
@@ -494,12 +487,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time>2021-09-09</time>
+        <time>2022-01-18</time>
         
       </div>
       
         <div>
-          <a class='readmore' href='/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/'>
+          <a class='readmore' href='/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/'>
             阅读全文
           </a>
         </div>
@@ -519,8 +512,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
 
 
-    
-  
+	
 </div>
 <aside class='l_side'>
   
@@ -787,14 +779,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.add("show");
+  l_header.classList.remove("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="none";
-    cover_wrapper.style.display="none";
+    cover_wrapper.id="half";
+    cover_wrapper.style.display="";
     
   
 </script>

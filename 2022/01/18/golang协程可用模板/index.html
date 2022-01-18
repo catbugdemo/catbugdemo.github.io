@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>标签：计算机基础 - 猫猫虫的博客</title>
+  <title>golang协程可用模板 - 猫猫虫的博客</title>
+  
+    <meta name="keywords" content="golang">
   
 
   
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  search' style="display: none;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -440,87 +440,226 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow blur article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+    <div class='headimg-div'>
+      <a class='headimg-a'>
+        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF.png'/>
+      </a>
+    </div>
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        golang协程可用模板
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>猫猫虫</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2022年1月18日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="golang协程可用模板" data-path="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>在我们使用协程的时候，如果一时想不起来，可以使用写好的模板套用</li>
+</ul>
+<h2 id="sync-WaitGroup"><a href="#sync-WaitGroup" class="headerlink" title="sync.WaitGroup"></a>sync.WaitGroup</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FuncName</span><span class="params">(list []List)</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    wg.Add(<span class="built_in">len</span>(list))</span><br><span class="line">    <span class="keyword">for</span> i,v <span class="keyword">range</span> list &#123;</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(index <span class="keyword">int</span>,value List)</span></span>&#123;</span><br><span class="line">            <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">                <span class="keyword">if</span> err:= <span class="built_in">recover</span>();err!=<span class="literal">nil</span>&#123;</span><br><span class="line">                    fmt.Printf(<span class="string">&quot;%+v&quot;</span>,errors.WithStack(err))</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">                &#125;</span><br><span class="line">                wg.Done()</span><br><span class="line">            &#125;()</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// do something </span></span><br><span class="line">        &#125;(i,v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sync-RWMutex-适用于读多写少情况"><a href="#sync-RWMutex-适用于读多写少情况" class="headerlink" title="sync.RWMutex (适用于读多写少情况)"></a>sync.RWMutex (适用于读多写少情况)</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TmpInfo <span class="keyword">struct</span>&#123;</span><br><span class="line">    TmpId <span class="keyword">int</span> </span><br><span class="line">    rmu sync.RWMutex</span><br><span class="line">    wg sync.WaitGroup</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FuncRW</span><span class="params">(list []List)</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ti TmpInfo </span><br><span class="line">    ti.wg.Add(<span class="built_in">len</span>(list))</span><br><span class="line">    <span class="keyword">for</span> k,v <span class="keyword">range</span> list &#123;</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(key <span class="keyword">int</span>,value List)</span></span>&#123;</span><br><span class="line">            <span class="comment">// 在使用读写锁的时候，读锁和写锁应该分开使用，如果添加了读锁 RLock() 后继续添加写锁 Lock()，则会出现 循环等待</span></span><br><span class="line">            <span class="comment">// 读锁占用的时候会阻止写，不会阻止读，写锁占用的时候会阻止任何操作</span></span><br><span class="line">            ti.rmu.RLock()</span><br><span class="line">            <span class="keyword">if</span> v.Id != ti.TmpId &#123;</span><br><span class="line">                ti.rmu.RUnLock()</span><br><span class="line">                ti.rmu.Lock()</span><br><span class="line">                <span class="comment">// do something</span></span><br><span class="line">                id := <span class="number">1</span></span><br><span class="line">                ti.rmu.UnLock()</span><br><span class="line">                ti.TmpId = id </span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">defer</span> ti.rmu.RunLock()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">        &#125;(k,v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903925364031496">https://juejin.cn/post/6844903925364031496</a></p>
+
+  
   
     
+    <div class='footer'>
       
-  <section class="post-list">
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/>http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
+  
+  
     
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-01-18T21:12:34+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2022年1月18日</p>
+  </a>
+</div>
+
+        
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>golang</p></a></div>
+
+
         
       
-    
-    
-      
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        学习位运算
-      </a>
-    </h2>
-  
-  <div class='md'>
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
       
-        前言
-最近在学习 golang 的时候发现一个代码，发现看不懂
-
-12345678910const (	read byte = 1 &lt;&lt; iota	wirte	exec)func main() &#123;	b := read | exec	fmt.Println(b)	// Output: 5&#125;
-
-
-看不懂是因为 不知道 | 是什么意思
-另一方面则是计算机基础不牢固
-...
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/&title=golang协程可用模板 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/&title=golang协程可用模板 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/&title=golang协程可用模板 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+    
       
     
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
+</div>
+
+
+
         
-        <time>2021-09-09</time>
-        
-      </div>
       
-        <div>
-          <a class='readmore' href='/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/'>
-            阅读全文
-          </a>
-        </div>
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/'>
+          <p class='title'>sorm-替代sqlx<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>sorm前言
+本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成
+学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow blur" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
+  </article>
 
 
-    
-  
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -528,250 +667,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget blogger shadow blur desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/'>
-          <img no-lazy src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E4%BD%9C%E8%80%85%E5%A4%B4%E5%83%8F.jpeg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>猫猫虫</h2>
-        
-        
-        
-          <p><span id="jinrishici-sentence">猫猫虫的博客</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@xxx.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/catbugdemo"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-<section class="widget shadow blur desktop">
-  
-  <header>
-    
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
-    
-  </header>
 
 
-  <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>15 篇</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2021/07/25'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Tue Jan 18 2022 21:12:43 GMT+0800 (中国标准时间)</div>
-            <div id="last-update-show">2022-01-18 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2022-01-18 日';
-          }
-        </script>
-        
-      
-    </div>
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow blur desktop mobile">
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/Golang/" style="font-size: 24px; color: #555">Golang</a> <a href="/tags/Rocket-MQ/" style="font-size: 19px; color: #777">Rocket MQ</a> <a href="/tags/golang/" style="font-size: 19px; color: #777">golang</a> <a href="/tags/golang-orm/" style="font-size: 14px; color: #999">golang,orm</a> <a href="/tags/golang-swagger/" style="font-size: 14px; color: #999">golang,swagger</a> <a href="/tags/hexo/" style="font-size: 19px; color: #777">hexo</a> <a href="/tags/test/" style="font-size: 14px; color: #999">test</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 14px; color: #999">计算机基础</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sync-WaitGroup"><span class="toc-text">sync.WaitGroup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sync-RWMutex-%E9%80%82%E7%94%A8%E4%BA%8E%E8%AF%BB%E5%A4%9A%E5%86%99%E5%B0%91%E6%83%85%E5%86%B5"><span class="toc-text">sync.RWMutex (适用于读多写少情况)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
     </div>
   </section>
 
 
   
 
-  
-    
-    
-
-<section class="widget qrcode shadow blur desktop mobile">
-  
-
-  <div class='content article-entry'>
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-  </div>
-</section>
-
-  
-
 
 </aside>
+
 
 
 		  
@@ -780,8 +697,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="golang协程可用模板";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

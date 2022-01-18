@@ -22,9 +22,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>单元测试 - 猫猫虫的博客</title>
-  
-    <meta name="keywords" content="test">
+  <title>Hello world - 猫猫虫的博客</title>
   
 
   
@@ -446,18 +444,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   
-    <div class='headimg-div'>
-      <a class='headimg-a'>
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.jpeg'/>
-      </a>
-    </div>
-  
   <div class="article-meta" id="top">
     
     
     
       <h1 class="title">
-        单元测试
+        Hello world
       </h1>
       <div class='new-meta-box'>
         
@@ -481,7 +473,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2021年12月1日</p>
+    <p>发布于：2022年1月17日</p>
   </a>
 </div>
 
@@ -492,7 +484,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="单元测试" data-path="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+      <div id="lc-pv" data-title="Hello world" data-path="/2022/01/17/hello-world/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -510,42 +502,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
   
-  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。</li>
-<li>单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。</li>
-<li>单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。</li>
-<li>单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。</li>
-</ul>
-<h2 id="单元测试-first-原则"><a href="#单元测试-first-原则" class="headerlink" title="单元测试 first 原则"></a>单元测试 first 原则</h2><h3 id="1-Fast-–-快速"><a href="#1-Fast-–-快速" class="headerlink" title="1.Fast – 快速"></a>1.Fast – 快速</h3><ul>
-<li>快速执行是单测的重要原则，确保单测在秒级甚至毫秒级执行完毕</li>
-</ul>
-<h3 id="2-Isolated-–-隔离"><a href="#2-Isolated-–-隔离" class="headerlink" title="2.Isolated – 隔离"></a>2.Isolated – 隔离</h3><ul>
-<li>好的单测是每个测试用例只关注一个逻辑单元或者代码分支，保证单一职责，这样能更清晰的暴露问题和定位问题</li>
-<li>每个单测之间不应该产生依赖，</li>
-<li>测试时不要依赖和修改外部数据或文件等其他共享资源，做到测试前后共享资源数据一致</li>
-</ul>
-<h3 id="3-Repeatable-–-可重复执行"><a href="#3-Repeatable-–-可重复执行" class="headerlink" title="3.Repeatable – 可重复执行"></a>3.Repeatable – 可重复执行</h3><ul>
-<li>单测是可以重复执行的，不能受到外界环境的影响，同一测试用例，即使是在不同的机器，不同的环境中运行多次，每次运行都会产生相同的结果</li>
-<li>避免隐式输入，不能依赖随机字段如 当前日期，随机数</li>
-</ul>
-<h3 id="4-Self-verifying-–-自我验证"><a href="#4-Self-verifying-–-自我验证" class="headerlink" title="4.Self-verifying – 自我验证"></a>4.Self-verifying – 自我验证</h3><ul>
-<li>单测需要通过断言进行结果验证，即当单测执行完毕之后，用来判断执行结果是否和假设一致，无需人工检查是否执行成功</li>
-</ul>
-<h3 id="5-Timely-amp-Thorough-–-即时，全面"><a href="#5-Timely-amp-Thorough-–-即时，全面" class="headerlink" title="5.Timely &amp; Thorough – 即时，全面"></a>5.Timely &amp; Thorough – 即时，全面</h3><ul>
-<li>理想状态 是 TDD 模式开发 ，但由于项目的紧急性(TDD 测试驱动开发一般无法实现，不要过分追求完美– 会害死自己)</li>
-<li>不要去想 100% 测试覆盖率 ，<strong>花合理的时间抓出大多数 bug, 要好过穷尽一生抓出所有 bug</strong></li>
-<li>考虑到参数的边界，特殊值，正常场景以及异常场景，<strong>保证核心流程是正确的</strong></li>
-</ul>
-<h2 id="golang-推荐好用的单测工具"><a href="#golang-推荐好用的单测工具" class="headerlink" title="golang 推荐好用的单测工具"></a>golang 推荐好用的单测工具</h2><ul>
-<li>golang 内置  func TestXXX </li>
-<li>assert 自动化测试断言工具 — github.com/stretchr/testify</li>
-<li>ginkgo  BDD测试思想 工具  – <a target="_blank" rel="noopener" href="https://github.com/onsi/ginkgo">https://github.com/onsi/ginkgo</a></li>
-<li>miniredis 缓存模拟工具 – github.com/alicebob/miniredis</li>
-<li>go-sqlmock 模拟工具 – github.com/DATA-DOG/go-sqlmock</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/387540827">https://zhuanlan.zhihu.com/p/387540827</a></li>
-</ul>
+  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
   
   
@@ -563,7 +532,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
             
               
-                <p>本文永久链接是：<a href=http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/>http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</a></p>
+                <p>本文永久链接是：<a href=http://example.com/2022/01/17/hello-world/>http://example.com/2022/01/17/hello-world/</a></p>
               
             
           </blockquote>
@@ -580,7 +549,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-01-17T17:39:55+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-01-17T17:39:57+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2022年1月17日</p>
@@ -591,9 +560,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         
           
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/test/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>test</p></a></div>
-
 
         
       
@@ -605,7 +571,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/&title=单元测试 - 猫猫虫的博客&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2022/01/17/hello-world/&title=Hello world - 猫猫虫的博客&summary="
           
           >
           
@@ -617,7 +583,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/&title=单元测试 - 猫猫虫的博客&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2022/01/17/hello-world/&title=Hello world - 猫猫虫的博客&summary="
           
           >
           
@@ -629,7 +595,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/&title=单元测试 - 猫猫虫的博客&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2022/01/17/hello-world/&title=Hello world - 猫猫虫的博客&summary="
           
           >
           
@@ -659,31 +625,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>给日志增加颜色</p>
-          <p class='content'>前言
-自己写的日志太单调了，又不想在 日志颜色上花功夫
-试试 github.com/fatih/color
-
-使用1.安装1go get github.com/fatih/color
-
-2.即开...</p>
-        </a>
       
-      
-        <a class='next' href='/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/'>
-          <p class='title'>Go语言编码规范<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>目录
-uber-go/guide 的中文翻译
-English
-Uber Go 语言编码规范
-版本
-目录
-介绍
-指导原则
-指向 interface 的指针
-Interface 合理性验证
-接收器 ...</p>
+        <a class='next' href='/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/'>
+          <p class='title'>sorm-替代sqlx<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>sorm前言
+本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成
+学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx...</p>
         </a>
       
     </div>
@@ -726,7 +673,7 @@ Interface 合理性验证
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-first-%E5%8E%9F%E5%88%99"><span class="toc-text">单元测试 first 原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Fast-%E2%80%93-%E5%BF%AB%E9%80%9F"><span class="toc-text">1.Fast – 快速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Isolated-%E2%80%93-%E9%9A%94%E7%A6%BB"><span class="toc-text">2.Isolated – 隔离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Repeatable-%E2%80%93-%E5%8F%AF%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C"><span class="toc-text">3.Repeatable – 可重复执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Self-verifying-%E2%80%93-%E8%87%AA%E6%88%91%E9%AA%8C%E8%AF%81"><span class="toc-text">4.Self-verifying – 自我验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Timely-amp-Thorough-%E2%80%93-%E5%8D%B3%E6%97%B6%EF%BC%8C%E5%85%A8%E9%9D%A2"><span class="toc-text">5.Timely &amp; Thorough – 即时，全面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#golang-%E6%8E%A8%E8%8D%90%E5%A5%BD%E7%94%A8%E7%9A%84%E5%8D%95%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="toc-text">golang 推荐好用的单测工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -745,7 +692,7 @@ Interface 合理性验证
 <script>
   window.pdata={}
   pdata.ispage=true;
-  pdata.postTitle="单元测试";
+  pdata.postTitle="Hello world";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要

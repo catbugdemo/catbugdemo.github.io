@@ -5,10 +5,6 @@
   <!-- SEO相关 -->
   
     
-      
-        <meta name="robots" content="index,follow">
-      
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -26,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>猫猫虫的博客</title>
+  <title>go语言json技巧 - 猫猫虫的博客</title>
+  
+    <meta name="keywords" content="golang">
   
 
   
@@ -108,7 +106,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -359,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  search' style="display: ;">
+        <div id="full" class='cover-wrapper post search' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -432,7 +430,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   </div>
 </div>
 
-          <div id="scroll-down" style="display: ;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
         </div>
     
   
@@ -443,651 +441,228 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow blur article-type-post" id="post" itemscope itemprop="blogPost">
   
-  <section class="post-list">
-    
-      
-        
-          
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
+
+
   
     <div class='headimg-div'>
-      <a class='headimg-a' href="/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/">
+      <a class='headimg-a'>
         <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7.png'/>
       </a>
     </div>
   
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        go语言json技巧
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>猫猫虫</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2022年2月7日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="go语言json技巧" data-path="/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h2 id="1-基本序列化"><a href="#1-基本序列化" class="headerlink" title="1.基本序列化"></a>1.基本序列化</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="keyword">string</span> <span class="string">`json:&quot;nname&quot;`</span></span><br><span class="line">    Age <span class="keyword">int</span>	<span class="string">`json:&quot;age&quot;`</span></span><br><span class="line">    Weight float <span class="string">`json:&quot;weight&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    p1 := Person&#123;</span><br><span class="line">        Name: <span class="string">&quot;七米&quot;</span>,</span><br><span class="line">        Age: <span class="number">18</span>,</span><br><span class="line">        Weight: <span class="number">71.5</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    buf ,err := json.Marshal(p1)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;%v&quot;</span>,err)</span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%s&quot;</span>,<span class="keyword">string</span>(buf))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 反序列</span></span><br><span class="line">    <span class="keyword">var</span> p2 Person </span><br><span class="line">    <span class="keyword">if</span> err := json.Unmarshal(b,&amp;p2);err!=<span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;%v&quot;</span>,err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%v&quot;</span>,p2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-忽略某个字段"><a href="#2-忽略某个字段" class="headerlink" title="2.忽略某个字段"></a>2.忽略某个字段</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 忽略 Weight</span></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</span><br><span class="line">    Name <span class="keyword">string</span> <span class="string">`json:&quot;name&quot;`</span></span><br><span class="line">    Weight float <span class="string">`json:&quot;-&quot;`</span> <span class="comment">// 指定json序列化/反序列化时忽略此字段</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-忽略空值字段"><a href="#3-忽略空值字段" class="headerlink" title="3.忽略空值字段"></a>3.忽略空值字段</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当 Weight 为空时，忽略</span></span><br><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span>&#123;</span><br><span class="line">    Name <span class="keyword">string</span> <span class="string">`json:&quot;name&quot;`</span></span><br><span class="line">    Weight float <span class="string">`json:&quot;weight,omitempty&quot;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-自定义MarshalJSON-和-UnmarshalJSON-方法"><a href="#4-自定义MarshalJSON-和-UnmarshalJSON-方法" class="headerlink" title="4.自定义MarshalJSON 和 UnmarshalJSON 方法"></a>4.自定义MarshalJSON 和 UnmarshalJSON 方法</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Order <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id <span class="keyword">int</span> <span class="string">`json:&quot;id&quot;`</span></span><br><span class="line">	Title <span class="keyword">string</span> <span class="string">`json:&quot;title&quot;`</span></span><br><span class="line">	CreatedTime time.Time <span class="string">`json:&quot;created_time&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> layout = <span class="string">&quot;2006-01-02 15:04:05&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Order)</span> <span class="title">MarshalJSON</span><span class="params">()</span><span class="params">([]<span class="keyword">byte</span>,error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">type</span> TempOrder Order <span class="comment">// 定义与 Order 字段一致的新类型</span></span><br><span class="line">	<span class="keyword">return</span> json.Marshal(<span class="keyword">struct</span> &#123;</span><br><span class="line">		CreatedTime <span class="keyword">string</span> <span class="string">`json:&quot;created_time&quot;`</span></span><br><span class="line">		*TempOrder <span class="comment">// 避免直接嵌套 Order 进入死循环</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		CreatedTime: o.CreatedTime.Format(layout),</span><br><span class="line">		TempOrder:(*TempOrder)(o),</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Order)</span> <span class="title">UnmarshalJSON</span><span class="params">(data []<span class="keyword">byte</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">type</span> TempOrder Order </span><br><span class="line">	ot := <span class="keyword">struct</span> &#123;</span><br><span class="line">		CreatedTime <span class="keyword">string</span> <span class="string">`json:&quot;created_time&quot;`</span></span><br><span class="line">		*TempOrder <span class="comment">// 避免直接嵌套 Order 进入死循环</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		TempOrder:(*TempOrder)(o),</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> err := json.Unmarshal(data, &amp;ot);err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> err error </span><br><span class="line">	o.CreatedTime, err = time.Parse(layout, ot.CreatedTime)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.liwenzhou.com/posts/Go/json_tricks_in_go/">https://www.liwenzhou.com/posts/Go/json_tricks_in_go/</a></p>
+
+  
   
     
-    <h2 class="article-title" >
-      <a href="/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/">
-        go语言json技巧
-      </a>
-    </h2>
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/>http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+    </div>
   
-  <div class='md'>
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-02-07T14:09:15+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2022年2月7日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/golang/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>golang</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
       
-        1.基本序列化12345678910111213141516171819202122232425262728type Person struct &#123;    Name string `json:&quot;nname&quot;`    Age int	`json:&quot;age&quot;`    Weight float `json:&quot;weight&quot;`&#...
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/&title=go语言json技巧 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/&title=go语言json技巧 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/&title=go语言json技巧 - 猫猫虫的博客&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+      
+    
       
     
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2022-02-07</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
 </div>
 
-          </div>
+
+
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F.jpeg'/>
-      </a>
     </div>
+  </div>
+
+
   
   
-    
-    <h2 class="article-title" >
-      <a href="/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/">
-        设计模式-组合模式
-      </a>
-    </h2>
+
   
-  <div class='md'>
-    
+    <div class="prev-next">
       
-        什么是「组合模式」？
+      
+        <a class='next' href='/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/'>
+          <p class='title'>设计模式-组合模式<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>什么是「组合模式」？
 一个具有层级关系的对象由一系列拥有父子关系的对象通过树形结构组成
 
 组合模式的优势:
 
 所见即所码：你所看见的代码结构就是业务真实的层级关系，比如 ui界面你真实看到那样
-高度封装：单一职责
-可复用：不同业务场景，相同的组件可被重复
-
-什么真实业务场景可以用「组合模式」？满足如下要求的所有场景：
-
-Get 请求获取页面数据的所有接口
-
-前端大行组件化的当今，我们再写后端...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2022-01-26</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/'>
-            阅读全文
-          </a>
-        </div>
+...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow blur" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
-        设计模式-责任链模式
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        责任链模式什么是「责任链模式」？
-首先把一系列业务按职责划分成不同的对象，接着把这一系列对象构成一个链，然后在这一系列对象中传递请求对象，直到被处理为止
-
-我们从概念中可以看出责任链模式有如下明显的优势
-
-按职责划分：解耦
-对象链: 逻辑清晰
+  </article>
 
 
-首先把一系列业务按职责划分成不同的对象，接着把这一系列对象构成一个链，直到”链路结束”为止。(结束：异常结束，或链路执行完毕)
-
-责任链模式的具体...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2022-01-25</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF.png'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
-        golang协程可用模板
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前言
-在我们使用协程的时候，如果一时想不起来，可以使用写好的模板套用
-
-sync.WaitGroup1234567891011121314151617func FuncName(list []List)&#123;    var wg sync.WaitGroup    wg.Add(len(list))    for i,v range list &#123;        go func...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2022-01-18</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/sorm-%E6%9B%BF%E4%BB%A3sqlx.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/">
-        sorm-替代sqlx
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        sorm前言
-本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成
-学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx 的时候感觉用的不顺手
-该项目依赖核心包 golang “database/sql”
-目前还没写 mysql 支持
 
 
-推荐使用 gorm 或者 sqlx ，因为前两个项目更加成熟
-其中添加了一些自己...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-12-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/go-swagger%20%E7%9A%84%E4%BD%BF%E7%94%A8.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/">
-        go-swagger的使用
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        go swagger 自动生成文档前言
-在写完代码或者正在写代码的时候，如果要与前端进行同步开发文档是必须的，但是如果在写代码的时候发现接口要改，这个时候为了确保前端能够理解又要修改开发文档，万一忘记改了，可能无法面对前端的质问
-这个时候一个实时同步的开发文档就很重要了
-
-学习使用1.安装12345678# 安装 swag 如果不行直接上二进制文件 (国内的连接问题 -- 直接用二进制文件)...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-12-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/12/13/go-swagger%E7%9A%84%E4%BD%BF%E7%94%A8/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/">
-        给日志增加颜色
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前言
-自己写的日志太单调了，又不想在 日志颜色上花功夫
-试试 github.com/fatih/color
-
-使用1.安装1go get github.com/fatih/color
-
-2.即开即用12// 输出绿色color.Green(&quot;test&quot;)
-
-
-进阶用法
-待补充
-
-参考
-https://github.com/fatih/color
-
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-12-03</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/12/03/%E7%BB%99%E6%97%A5%E5%BF%97%E5%A2%9E%E5%8A%A0%E9%A2%9C%E8%89%B2/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
-        单元测试
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前言
-单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。
-单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。
-单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。
-单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。
-
-单元测试 first 原则1.Fast – 快速
-快速执行是单测的重要原则，确保单测在秒级甚至毫秒级执行完...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-12-01</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
-        Go语言编码规范
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        目录
-uber-go/guide 的中文翻译
-English
-Uber Go 语言编码规范
-版本
-目录
-介绍
-指导原则
-指向 interface 的指针
-Interface 合理性验证
-接收器 (receiver) 与接口
-零值 Mutex 是有效的
-在边界处拷贝 Slices 和 Maps
-接收 Slices 和 Maps
-返回 slices 或 maps
-
-
-使用 defer 释放资源
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-09-13</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow blur">
-  
-  
-  
-    <div class='headimg-div'>
-      <a class='headimg-a' href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        <img class='headimg' src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE%E7%89%87/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97.jpeg'/>
-      </a>
-    </div>
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-        学习位运算
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        前言
-最近在学习 golang 的时候发现一个代码，发现看不懂
-
-12345678910const (	read byte = 1 &lt;&lt; iota	wirte	exec)func main() &#123;	b := read | exec	fmt.Println(b)	// Output: 5&#125;
-
-
-看不懂是因为 不知道 | 是什么意思
-另一方面则是计算机基础不牢固
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-09-09</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/09/09/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-    
-  </section>
-  
-    
-      <br>
-      <div class="prev-next">
-        
-        <p class="current">
-          1 / 2
-        </p>
-        
-          <a class="next" rel="next" href="/page/2/">
-            <section class="post next white-box shadow blur">
-              &nbsp;下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </section>
-          </a>
-        
-      </div>
-    
-  
 
 
 </div>
@@ -1097,245 +672,22 @@ Interface 合理性验证
     
     
 
-<section class="widget blogger shadow blur desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/'>
-          <img no-lazy src='https://myself-1302178698.cos.ap-shanghai.myqcloud.com/%E4%BD%9C%E8%80%85%E5%A4%B4%E5%83%8F.jpeg'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>猫猫虫</h2>
-        
-        
-        
-          <p><span id="jinrishici-sentence">猫猫虫的博客</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:me@xxx.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/catbugdemo"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-<section class="widget shadow blur desktop">
-  
-  <header>
-    
-      <i class="fas fa-award fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
-    
-  </header>
 
 
-  <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>18 篇</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2021/07/25'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站访客数：</div>
-          
-          <div><span id="lc-uv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 人</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>本站总访问量：</div>
-          
-          <div><span id="lc-sv"><span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span></span> 次</div>
-          
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Mon Feb 07 2022 14:09:24 GMT+0800 (中国标准时间)</div>
-            <div id="last-update-show">2022-02-07 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2022-02-07 日';
-          }
-        </script>
-        
-      
-    </div>
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow blur desktop mobile">
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <a href="/tags/Golang/" style="font-size: 24px; color: #555">Golang</a> <a href="/tags/Rocket-MQ/" style="font-size: 17.33px; color: #828282">Rocket MQ</a> <a href="/tags/golang/" style="font-size: 20.67px; color: #6c6c6c">golang</a> <a href="/tags/golang-orm/" style="font-size: 14px; color: #999">golang,orm</a> <a href="/tags/golang-swagger/" style="font-size: 14px; color: #999">golang,swagger</a> <a href="/tags/hexo/" style="font-size: 17.33px; color: #828282">hexo</a> <a href="/tags/test/" style="font-size: 14px; color: #999">test</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" style="font-size: 14px; color: #999">计算机基础</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 14px; color: #999">设计模式</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-golang/" style="font-size: 14px; color: #999">设计模式,golang</a>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">1.基本序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BF%BD%E7%95%A5%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5"><span class="toc-text">2.忽略某个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BF%BD%E7%95%A5%E7%A9%BA%E5%80%BC%E5%AD%97%E6%AE%B5"><span class="toc-text">3.忽略空值字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%87%AA%E5%AE%9A%E4%B9%89MarshalJSON-%E5%92%8C-UnmarshalJSON-%E6%96%B9%E6%B3%95"><span class="toc-text">4.自定义MarshalJSON 和 UnmarshalJSON 方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-
-<section class="widget qrcode shadow blur desktop mobile">
-  
-
-  <div class='content article-entry'>
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-      <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'
-      
-        height='64px'
-      />
-    
-  </div>
-</section>
 
   
 
@@ -1350,21 +702,21 @@ Interface 合理性验证
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="go语言json技巧";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="full";
-    cover_wrapper.style.display="";
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
     
   
 </script>

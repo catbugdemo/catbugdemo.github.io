@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言 简化并发开发 以下代码内容均来自大彬大佬">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Go并发模型">
+<meta property="og:url" content="http://example.com/2021/08/06/%E5%AD%A6%E4%B9%A0Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="catbugdemo的博客">
+<meta property="og:description" content="前言 简化并发开发 以下代码内容均来自大彬大佬">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-06T02:30:01.000Z">
+<meta property="article:modified_time" content="2024-01-16T05:35:22.453Z">
+<meta property="article:author" content="catbugdemo">
+<meta property="article:tag" content="Python,Go">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/08/06/学习Go并发模型/"/>
+
+
+
+
+
+  <title>学习Go并发模型 | catbugdemo的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">catbugdemo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">需求带动技术，技术引发需求</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/06/%E5%AD%A6%E4%B9%A0Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习Go并发模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-06T10:30:01+08:00">
+                2021-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>简化并发开发</li>
+<li>以下代码内容均来自<a target="_blank" rel="noopener" href="https://github.com/Shitaibin/golang_step_by_step">大彬大佬</a><span id="more"></span></li>
+</ul>
+<h2 id="1-简单例子"><a href="#1-简单例子" class="headerlink" title="1.简单例子"></a>1.简单例子</h2><ul>
+<li>将数组内的数据转变为他们的平方</li>
+<li>分解以上过程为三个步骤<ul>
+<li>生产信息 <code>producer()</code>，遍历切片</li>
+<li>处理信息 <code>square()</code>，计算平方</li>
+<li>消费信息 <code>main()</code>，消费</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-生产信息"><a href="#1-生产信息" class="headerlink" title="1.生产信息"></a>1.生产信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc producer(nums ...int) &lt;-chan int &#123;</span><br><span class="line">	// 创建带缓冲通道</span><br><span class="line">	out := make(chan int,10)</span><br><span class="line">	// 通过协程将数据存储到通道中</span><br><span class="line">	go func()&#123;</span><br><span class="line">		defer close(out) //最后关闭通道</span><br><span class="line">		for _,num := range nums &#123;</span><br><span class="line">			out &lt;- num</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	return out</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-处理信息"><a href="#2-处理信息" class="headerlink" title="2.处理信息"></a>2.处理信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc square(inCh &lt;-chan int) &lt;-chan int &#123;</span><br><span class="line">	out := make(chan int,10)</span><br><span class="line">	go func()&#123;</span><br><span class="line">		defer cloes(out)</span><br><span class="line">		for n := range inCh &#123;</span><br><span class="line">			out &lt;- n*n</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	return out</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-消费信息"><a href="#3-消费信息" class="headerlink" title="3.消费信息"></a>3.消费信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc main() &#123;</span><br><span class="line">	// 先将数据拆分放入通道</span><br><span class="line">	in := producer(1,2,3,4)</span><br><span class="line">	// 处理数据</span><br><span class="line">	ch := square(in)</span><br><span class="line">	// 消费数据</span><br><span class="line">	for ret := range ch &#123;</span><br><span class="line">	fmt.Printf(&quot;%3d&quot;,ret)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="扇形模型优化-FAN-IN-与-FAN-OUT"><a href="#扇形模型优化-FAN-IN-与-FAN-OUT" class="headerlink" title="扇形模型优化 FAN-IN 与 FAN-OUT"></a>扇形模型优化 FAN-IN 与 FAN-OUT</h2><ul>
+<li>FAN-OUT : 多个 goruntine 从同一个通道读取数据，直到该通道关闭</li>
+<li>FAN-IN ：1个 goruntine 从多个通道读取数据，直到该通道关闭</li>
+</ul>
+<h3 id="1-FAN-OUT-和-FAN-IN-实践"><a href="#1-FAN-OUT-和-FAN-IN-实践" class="headerlink" title="1. FAN-OUT 和 FAN-IN 实践"></a>1. FAN-OUT 和 FAN-IN 实践</h3><h4 id="1-生产者producer-和-消息处理square-不变"><a href="#1-生产者producer-和-消息处理square-不变" class="headerlink" title="1.生产者producer() 和 消息处理square()不变"></a>1.生产者<code>producer()</code> 和 消息处理<code>square()</code>不变</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc producer(nums ...int) &lt;-chan int &#123;</span><br><span class="line">	// 创建带缓冲通道</span><br><span class="line">	out := make(chan int,10)</span><br><span class="line">	// 通过协程将数据存储到通道中</span><br><span class="line">	go func()&#123;</span><br><span class="line">		defer close(out) //最后关闭通道</span><br><span class="line">		for _,num := range nums &#123;</span><br><span class="line">			out &lt;- num</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	return out</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func square(inCh &lt;-chan int) &lt;-chan int &#123;</span><br><span class="line">	out := make(chan int,10)</span><br><span class="line">	go func()&#123;</span><br><span class="line">		defer cloes(out)</span><br><span class="line">		for n := range inCh &#123;</span><br><span class="line">			out &lt;- n*n</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	return out</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-新增merge-用来多个square-操作最后回归到一个通道消费读取—-FAN-IN"><a href="#2-新增merge-用来多个square-操作最后回归到一个通道消费读取—-FAN-IN" class="headerlink" title="2. 新增merge() 用来多个square() 操作最后回归到一个通道消费读取— FAN-IN"></a>2. 新增<code>merge()</code> 用来多个<code>square()</code> 操作最后回归到一个通道消费读取— FAN-IN</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc merge(cs ...&lt;-chan int) &lt;-chan int &#123;</span><br><span class="line">	out := make(chan int,10)</span><br><span class="line">	</span><br><span class="line">	// 创建计时器</span><br><span class="line">	var wg sync.WaitGroup</span><br><span class="line">	// 将所有数据回归到一个通道中</span><br><span class="line">	// 该通道为可操作通道</span><br><span class="line">	collect := func (in chan int)&#123;</span><br><span class="line">		defer wg.Done()</span><br><span class="line">		for n := range in &#123;</span><br><span class="line">			out &lt;- n</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	wg.Add(len(cs))</span><br><span class="line">	// FAN - IN</span><br><span class="line">	for _,c := range cs &#123;</span><br><span class="line">		go collect(c)</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	// 错误方式：直接等待是bug，死锁，因为merge写了out，main却没有读</span><br><span class="line">	// wg.Wait()</span><br><span class="line">	 // close(out)</span><br><span class="line">	 </span><br><span class="line">	go func()&#123;</span><br><span class="line">		wg.Wait()</span><br><span class="line">		close(out)</span><br><span class="line">	&#125;()</span><br><span class="line">	</span><br><span class="line">	return out</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-修改main-启动3个square-，一个生产者producer-被多个square-读取-—-FAN-OUT"><a href="#3-修改main-启动3个square-，一个生产者producer-被多个square-读取-—-FAN-OUT" class="headerlink" title="3.修改main(),启动3个square()，一个生产者producer()被多个square()读取 — FAN-OUT"></a>3.修改<code>main()</code>,启动3个<code>square()</code>，一个生产者<code>producer()</code>被多个<code>square()</code>读取 — FAN-OUT</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">COPYfunc main() &#123;</span><br><span class="line">	in := producer(1,2,3,4)</span><br><span class="line">	</span><br><span class="line">	// FAN-OUT  这个时候开启了协程</span><br><span class="line">	c1 := square(in)</span><br><span class="line">	c2 := square(in)</span><br><span class="line">	c3 := square(in)</span><br><span class="line">	</span><br><span class="line">	// consumer</span><br><span class="line">	for ret := merge(c1,c2,c3) &#123;</span><br><span class="line">		fmt.Printf(&quot;%3d&quot;,ret)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-优化-FAN-模式"><a href="#3-优化-FAN-模式" class="headerlink" title="3.优化 FAN 模式"></a>3.优化 FAN 模式</h2><ul>
+<li>不同的场景优化不同，要依据具体的情况，解决程序的瓶颈</li>
+<li>但总的来说 不推荐用无缓冲通道，推荐用有缓冲通道</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><ul>
+<li>这是一篇学习博客，推荐去看 <a target="_blank" rel="noopener" href="https://github.com/Shitaibin/golang_step_by_step">原文章</a></li>
+<li>谢谢能看到最后</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/03/%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8Rocket-MQ/" rel="next" title="学习使用Rocket MQ">
+                <i class="fa fa-chevron-left"></i> 学习使用Rocket MQ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/08/08/Goland-%E5%BC%80%E5%90%AF%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" rel="prev" title="Goland 开启一个项目的正确姿势">
+                Goland 开启一个项目的正确姿势 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">1.简单例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%94%9F%E4%BA%A7%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.</span> <span class="nav-text">1.生产信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%84%E7%90%86%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">2.处理信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%B6%88%E8%B4%B9%E4%BF%A1%E6%81%AF"><span class="nav-number">2.3.</span> <span class="nav-text">3.消费信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%87%E5%BD%A2%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96-FAN-IN-%E4%B8%8E-FAN-OUT"><span class="nav-number">3.</span> <span class="nav-text">扇形模型优化 FAN-IN 与 FAN-OUT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-FAN-OUT-%E5%92%8C-FAN-IN-%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.1.</span> <span class="nav-text">1. FAN-OUT 和 FAN-IN 实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%9F%E4%BA%A7%E8%80%85producer-%E5%92%8C-%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86square-%E4%B8%8D%E5%8F%98"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.生产者producer() 和 消息处理square()不变</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%96%B0%E5%A2%9Emerge-%E7%94%A8%E6%9D%A5%E5%A4%9A%E4%B8%AAsquare-%E6%93%8D%E4%BD%9C%E6%9C%80%E5%90%8E%E5%9B%9E%E5%BD%92%E5%88%B0%E4%B8%80%E4%B8%AA%E9%80%9A%E9%81%93%E6%B6%88%E8%B4%B9%E8%AF%BB%E5%8F%96%E2%80%94-FAN-IN"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. 新增merge() 用来多个square() 操作最后回归到一个通道消费读取— FAN-IN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9main-%E5%90%AF%E5%8A%A83%E4%B8%AAsquare-%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%94%9F%E4%BA%A7%E8%80%85producer-%E8%A2%AB%E5%A4%9A%E4%B8%AAsquare-%E8%AF%BB%E5%8F%96-%E2%80%94-FAN-OUT"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.修改main(),启动3个square()，一个生产者producer()被多个square()读取 — FAN-OUT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BC%98%E5%8C%96-FAN-%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">3.优化 FAN 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">catbugdemo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

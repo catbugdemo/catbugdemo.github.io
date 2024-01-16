@@ -82,7 +82,7 @@
 <meta name="description" content="Go,Python学习笔记，由Hexo+Github搭建。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="catbugdemo的博客">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="catbugdemo的博客">
 <meta property="og:description" content="Go,Python学习笔记，由Hexo+Github搭建。">
 <meta property="og:locale" content="zh_CN">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://example.com/"/>
+  <link rel="canonical" href="http://example.com/page/2/"/>
 
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/10/%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E5%87%BB%E7%A9%BF-%E9%9B%AA%E5%B4%A9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -251,7 +251,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/10/%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E5%87%BB%E7%A9%BF-%E9%9B%AA%E5%B4%A9/" itemprop="url">解决缓存穿透,击穿,雪崩</a></h1>
+                <a class="post-title-link" href="/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/" itemprop="url">Go语言编程规范</a></h1>
         
 
         <div class="post-meta">
@@ -263,8 +263,380 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-02-10T14:56:25+08:00">
-                2024-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-13T13:30:38+08:00">
+                2021-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>样式 (style) 是支配我们代码的惯例。术语<code>样式</code>有点用词不当，因为这些约定涵盖的范围不限于由 gofmt 替我们处理的源文件格式。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/09/13/Go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/20/%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE/" itemprop="url">快速构建一个简单项目</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-20T08:51:52+08:00">
+                2021-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>所有项目都是从一个文件，一个 main 中开始的，可以根据以下步骤进行一个项目的初始化</strong></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/08/20/%E5%BF%AB%E9%80%9F%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/Goland-%E5%BC%80%E5%90%AF%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/08/Goland-%E5%BC%80%E5%90%AF%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" itemprop="url">Goland 开启一个项目的正确姿势</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-08T21:20:01+08:00">
+                2021-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          解决创建项目时出现的问题
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/08/08/Goland-%E5%BC%80%E5%90%AF%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/06/%E5%AD%A6%E4%B9%A0Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/06/%E5%AD%A6%E4%B9%A0Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B/" itemprop="url">学习Go并发模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-06T10:30:01+08:00">
+                2021-08-06
               </time>
             
 
@@ -303,11 +675,11 @@
       
         
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>当我们去使用 redis 组合 golang 时，看到网上有关很多缓存穿透和缓存雪崩的问题，但是真正组合在一起的代码比较少，其实可以去多参考他人的代码编写出自己的模板</li>
-<li>不过像这种已经成套体系，能用现成的才是最好的（笑）
+<li>简化并发开发</li>
+<li>以下代码内容均来自<a target="_blank" rel="noopener" href="https://github.com/Shitaibin/golang_step_by_step">大彬大佬</a>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2024/02/10/%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E5%87%BB%E7%A9%BF-%E9%9B%AA%E5%B4%A9/#more" rel="contents">
+            <a class="btn" href="/2021/08/06/%E5%AD%A6%E4%B9%A0Go%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -358,7 +730,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/08/sorm%E9%9A%BE%E7%82%B9%E6%80%BB%E7%BB%93-reflect/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/03/%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8Rocket-MQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -377,7 +749,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/02/08/sorm%E9%9A%BE%E7%82%B9%E6%80%BB%E7%BB%93-reflect/" itemprop="url">sorm难点总结-reflect</a></h1>
+                <a class="post-title-link" href="/2021/08/03/%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8Rocket-MQ/" itemprop="url">学习使用Rocket MQ</a></h1>
         
 
         <div class="post-meta">
@@ -389,8 +761,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-02-08T14:54:13+08:00">
-                2022-02-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-03T09:28:10+08:00">
+                2021-08-03
               </time>
             
 
@@ -428,10 +800,14 @@
 
       
         
-          <h2 id="假如-interface-进来了，我想传给下一步，但其本身还能赋值"><a href="#假如-interface-进来了，我想传给下一步，但其本身还能赋值" class="headerlink" title="假如 interface 进来了，我想传给下一步，但其本身还能赋值"></a>假如 interface 进来了，我想传给下一步，但其本身还能赋值</h2>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>当我们学习完 Rocket MQ 的单机部署时，我们可以进行一个简单的收发消息</li>
+<li>需要编写的函数 ：生产者，消费者</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq/blob/master/docs/cn/architecture.md">架构地址</a></li>
+<li>以下所有案例均来自<a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq-client-go/tree/native/examples">官方example</a>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/02/08/sorm%E9%9A%BE%E7%82%B9%E6%80%BB%E7%BB%93-reflect/#more" rel="contents">
+            <a class="btn" href="/2021/08/03/%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8Rocket-MQ/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -482,7 +858,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/%E9%83%A8%E7%BD%B2Rocket-MQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -501,7 +877,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/" itemprop="url">go语言json技巧</a></h1>
+                <a class="post-title-link" href="/2021/08/02/%E9%83%A8%E7%BD%B2Rocket-MQ/" itemprop="url">部署Rocket-MQ</a></h1>
         
 
         <div class="post-meta">
@@ -513,8 +889,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-02-07T14:52:04+08:00">
-                2022-02-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-02T10:23:31+08:00">
+                2021-08-02
               </time>
             
 
@@ -552,10 +928,14 @@
 
       
         
-          <h2 id="1-基本序列化"><a href="#1-基本序列化" class="headerlink" title="1.基本序列化"></a>1.基本序列化</h2>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>学习一个组件的前提是去使用它</li>
+<li>rocketMQ 中存在几种部署模式：单机部署，多Master部署，多主多从，Dleger模式</li>
+<li>因为目前是学习，所以只推荐 – 单机部署</li>
+<li>单机部署两种方式<br>1.本地下载运行 (推荐第一次安装时使用该方法)<br>2.docker容器部署 (推荐第二次即以后使用该方法)
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/02/07/go%E8%AF%AD%E8%A8%80json%E6%8A%80%E5%B7%A7/#more" rel="contents">
+            <a class="btn" href="/2021/08/02/%E9%83%A8%E7%BD%B2Rocket-MQ/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -606,7 +986,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -625,7 +1005,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/" itemprop="url">设计模式-组合模式</a></h1>
+                <a class="post-title-link" href="/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/" itemprop="url">学习go-cache</a></h1>
         
 
         <div class="post-meta">
@@ -637,8 +1017,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-26T14:50:53+08:00">
-                2022-01-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-29T10:12:27+08:00">
+                2021-07-29
               </time>
             
 
@@ -676,12 +1056,13 @@
 
       
         
-          <h2 id="什么是「组合模式」？"><a href="#什么是「组合模式」？" class="headerlink" title="什么是「组合模式」？"></a>什么是「组合模式」？</h2><blockquote>
-<p>一个具有层级关系的对象由一系列拥有父子关系的对象通过树形结构组成</p>
+          <h2 id="go-cache-学习缓存的前置知识"><a href="#go-cache-学习缓存的前置知识" class="headerlink" title="go-cache 学习缓存的前置知识"></a>go-cache 学习缓存的前置知识</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/patrickmn/go-cache">go-cache代码地址</a></p>
 </blockquote>
+<h3 id="1-什么是读锁，什么是写锁，sync-Mutex-和-sync-RWMutex-的区别"><a href="#1-什么是读锁，什么是写锁，sync-Mutex-和-sync-RWMutex-的区别" class="headerlink" title="1.什么是读锁，什么是写锁，sync.Mutex 和 sync.RWMutex 的区别"></a>1.什么是读锁，什么是写锁，sync.Mutex 和 sync.RWMutex 的区别</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+            <a class="btn" href="/2021/07/29/%E5%AD%A6%E4%B9%A0go-cache/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -732,7 +1113,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -751,7 +1132,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" itemprop="url">设计模式-责任链模式</a></h1>
+                <a class="post-title-link" href="/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" itemprop="url">Hexo 框架(一) 搭建自己的博客</a></h1>
         
 
         <div class="post-meta">
@@ -763,8 +1144,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-25T14:48:46+08:00">
-                2022-01-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-27T10:03:27+08:00">
+                2021-07-27
               </time>
             
 
@@ -802,651 +1183,14 @@
 
       
         
-          <h2 id="什么是「责任链模式」？"><a href="#什么是「责任链模式」？" class="headerlink" title="什么是「责任链模式」？"></a>什么是「责任链模式」？</h2><blockquote>
-<p>首先把一系列业务按职责划分成不同的对象，接着把这一系列对象构成一个链，<br>然后在这一系列对象中传递请求对象，直到被处理为止</p>
+          <h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><h3 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1. 安装nodejs"></a><strong>1. 安装nodejs</strong></h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/nodejs/nodejs-install-setup.html">参考nodejs</a></p>
 </blockquote>
+<ul>
+<li>可能会遇到的问题<br><strong>nodejs 版本过高</strong><br>: 可以使用 npm 进行版本控制<br>: &gt;<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34051201/article/details/89093598">参考地址</a>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/01/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="catbugdemo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/" itemprop="url">golang协程可用模板</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-01-18T14:47:31+08:00">
-                2022-01-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>在我们使用协程的时候，如果一时想不起来，可以使用写好的模板套用
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="catbugdemo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/" itemprop="url">sorm-替代sqlx</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-13T14:46:19+08:00">
-                2021-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成<ul>
-<li>学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx 的时候感觉用的不顺手</li>
-<li>该项目依赖核心包 golang “database&#x2F;sql”</li>
-<li>目前还没写 mysql 支持</li>
-</ul>
-</li>
-<li>推荐使用 gorm 或者 sqlx ，因为前两个项目更加成熟</li>
-<li>其中添加了一些自己的思考，新增了 postgres 数据库支持</li>
-<li>新增批量插入,同时返回插入后的数据</li>
-<li>支持 where 重叠 以及 in 的支持
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/13/go-swagger%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="catbugdemo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/12/13/go-swagger%E4%BD%BF%E7%94%A8/" itemprop="url">go-swagger使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-13T14:31:25+08:00">
-                2021-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="go-swagger-自动生成文档"><a href="#go-swagger-自动生成文档" class="headerlink" title="go swagger 自动生成文档"></a>go swagger 自动生成文档</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
-<li>在写完代码或者正在写代码的时候，如果要与前端进行同步开发文档是必须的，但是如果在写代码的时候发现接口要改，这个时候为了确保前端能够理解又要修改开发文档，万一忘记改了，可能无法面对前端的质问</li>
-<li>这个时候一个实时同步的开发文档就很重要了
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/12/13/go-swagger%E4%BD%BF%E7%94%A8/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="catbugdemo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" itemprop="url">单元测试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-01T14:30:32+08:00">
-                2021-12-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。</li>
-<li>单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。</li>
-<li>单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。</li>
-<li>单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="catbugdemo的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/09/16/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/" itemprop="url">学习位运算</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-16T10:59:19+08:00">
-                2021-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>最近在学习 golang 的时候发现一个代码，发现看不懂</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/09/16/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/#more" rel="contents">
+            <a class="btn" href="/2021/07/27/Hexo-%E6%A1%86%E6%9E%B6-%E4%B8%80-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1488,7 +1232,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 

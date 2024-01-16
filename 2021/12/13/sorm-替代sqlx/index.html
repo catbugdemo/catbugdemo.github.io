@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言 本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成 学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx 的时候感觉用的不顺手 该项目依赖核心包 golang “database&#x2F;sql” 目前还没写 mysql 支持   推荐使用 gorm 或者 sqlx ，因为前两个项目更加成熟 其中添加了一些自己的思">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sorm-替代sqlx">
+<meta property="og:url" content="http://example.com/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/index.html">
+<meta property="og:site_name" content="catbugdemo的博客">
+<meta property="og:description" content="前言 本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成 学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx 的时候感觉用的不顺手 该项目依赖核心包 golang “database&#x2F;sql” 目前还没写 mysql 支持   推荐使用 gorm 或者 sqlx ，因为前两个项目更加成熟 其中添加了一些自己的思">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-13T06:46:19.000Z">
+<meta property="article:modified_time" content="2024-01-16T06:49:56.373Z">
+<meta property="article:author" content="catbugdemo">
+<meta property="article:tag" content="Python,Go">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/12/13/sorm-替代sqlx/"/>
+
+
+
+
+
+  <title>sorm-替代sqlx | catbugdemo的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">catbugdemo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">需求带动技术，技术引发需求</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/13/sorm-%E6%9B%BF%E4%BB%A3sqlx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sorm-替代sqlx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-13T14:46:19+08:00">
+                2021-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>本代码的核心架构为 Geeorm 架构 ，参考 7 days geeorm 和 gorm 编写而成<ul>
+<li>学习并编写该项目的原因是因为 在 使用了 gorm 后，项目架构变更为 sqlx 的时候感觉用的不顺手</li>
+<li>该项目依赖核心包 golang “database&#x2F;sql”</li>
+<li>目前还没写 mysql 支持</li>
+</ul>
+</li>
+<li>推荐使用 gorm 或者 sqlx ，因为前两个项目更加成熟</li>
+<li>其中添加了一些自己的思考，新增了 postgres 数据库支持</li>
+<li>新增批量插入,同时返回插入后的数据</li>
+<li>支持 where 重叠 以及 in 的支持<span id="more"></span></li>
+</ul>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/catbugdemo/sorm">https://github.com/catbugdemo/sorm</a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>7 days golang programs from scratch <a target="_blank" rel="noopener" href="https://github.com/geektutu/7days-golang">https://github.com/geektutu/7days-golang</a></li>
+<li>gorm <a target="_blank" rel="noopener" href="https://github.com/go-gorm/gorm">https://github.com/go-gorm/gorm</a></li>
+</ul>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="1-连接"><a href="#1-连接" class="headerlink" title="1.连接"></a>1.连接</h3><h4 id="1-基础使用"><a href="#1-基础使用" class="headerlink" title="1. 基础使用"></a>1. 基础使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">COPY// 获取 db</span><br><span class="line">db ,err :=sorm.Open(&quot;postgres&quot;,fmt.Sprint(&quot;host=127.0.0.1 port=5432 user=postgres password=123456 dbname=mydb sslmode=disable&quot;))</span><br><span class="line">if err!= nil &#123;</span><br><span class="line">  return err</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">type UserTest struct &#123;</span><br><span class="line">  Id string `db:&quot;id&quot; sorm:&quot;primary key&quot;`</span><br><span class="line">  CreatedTime `db:&quot;created_time&quot;`</span><br><span class="line">  Name string `db:&quot;name&quot;`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 设置 Model -- 该行为会自动转换 UserTest 内部信息</span><br><span class="line">// 默认设置 表名 user_test，column 映射为  tag 中 db 的 数据</span><br><span class="line">db.Model(&amp;UserTest&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-替换-sqlx"><a href="#2-替换-sqlx" class="headerlink" title="2. 替换 sqlx"></a>2. 替换 sqlx</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">COPY  sqlxDB, err := sqlx.Open(driverName,dataSourceName)</span><br><span class="line">  if err!= nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  // db </span><br><span class="line">  db, err := sorm.ReplaceSqlx(sqlxDB)</span><br><span class="line">  if err!= nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  db.First()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-CRUD"><a href="#2-CRUD" class="headerlink" title="2.CRUD"></a>2.CRUD</h3><h4 id="1-新增"><a href="#1-新增" class="headerlink" title="1.新增"></a>1.新增</h4><ul>
+<li><p>Create 新增一条数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">COPY</span><br><span class="line">ut := UserTest&#123;Name:&quot;test&quot;&#125;</span><br><span class="line">if err := db.Create(&amp;ut);err!=nil &#123;</span><br><span class="line">  return err</span><br><span class="line">&#125;</span><br><span class="line">// INSERT INTO user_test(name) VALUES(&#x27;test&#x27;)</span><br><span class="line">fmt.Println(ut)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Insert 新增多条数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">COPY  ut1 := UserTest&#123;CreatedTime: time.Now(),Name:&quot;test1&quot;&#125;</span><br><span class="line">  ut2 := UserTest&#123;CreatedTime: time.Now(),Name:&quot;test2&quot;&#125;</span><br><span class="line">  uts := make([]UserTest,0,2)</span><br><span class="line">  uts = append(uts,ut1,ut2)</span><br><span class="line">  if err := db.Insert(&amp;uts);err!=nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  // INSERT INTO user_test(created_time,name) VALUES(&#x27;2006-01-02 15:04:05&#x27;,&#x27;test1&#x27;),(&#x27;2006-01-02 15:04:05&#x27;,&#x27;test2&#x27;)</span><br><span class="line">  fmt.Println(uts)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-查询"><a href="#2-查询" class="headerlink" title="2.查询"></a>2.查询</h4><ul>
+<li><p>First 查询一条数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">COPYvar ut UserTest</span><br><span class="line">if err := db.First(&amp;ut);err!=nil &#123;</span><br><span class="line">    return err</span><br><span class="line">&#125;</span><br><span class="line">// SELECT id,name FROM user_test Limit 1</span><br><span class="line">fmt.Println(ut)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Find 查询多条记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">COPYvar uts []UserTest</span><br><span class="line">if err := db.Where(&quot;id in (?)&quot;,[]int&#123;1,2&#125;).Find(&amp;uts);err!=nil&#123;</span><br><span class="line">    return err</span><br><span class="line">&#125;</span><br><span class="line">// SELECT id,name FROM user_test WHERE id in (1,2) </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Where 条件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPYvar ut UserTest</span><br><span class="line">db.Where(&quot;id=?&quot;,1).First(&amp;ut)</span><br><span class="line">// SELECT id,created_time,name FROM user_test WHERE id=&#x27;1&#x27;</span><br><span class="line"></span><br><span class="line">// 支持 Where 重叠</span><br><span class="line">var uts []UserTest</span><br><span class="line">db.Where(&quot;name=?&quot;,&quot;test&quot;).Where(&quot;id in (?)&quot;,[]int&#123;1,2&#125;).Find(&amp;uts)</span><br><span class="line">// SELECT id,created_time,name FROM user_test WHERE name=&#x27;test&#x27; and id in (&#x27;1&#x27;,&#x27;2&#x27;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Limit ,Offset</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPYvar uts []UserTest</span><br><span class="line">db.Limit(1).Offset(1).Find(&amp;ut)</span><br><span class="line">// SELECT id,created_time,name FROM user_test LIMIT 1 OFFSET 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Select (选择需要查询的数据) 支持 数组 和 单个数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPYvar ut UserTest</span><br><span class="line">db.Select(&quot;name&quot;).First(&amp;ut)</span><br><span class="line">// SELECT name FROM user_test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Table (自主选择查询表名)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPYvar ids []int</span><br><span class="line">db.Select(&quot;id&quot;).Table(&quot;user_test&quot;).Rows().Scan(&amp;ids)</span><br><span class="line">// SELECT id FROM user_test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Count 查询总数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COPYvar count int </span><br><span class="line">db.Model(&amp;ut).Count(&amp;count)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-修改"><a href="#3-修改" class="headerlink" title="3.修改"></a>3.修改</h4></li>
+<li><p>Update 单一参数修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">COPY  var ut UserTest</span><br><span class="line">  if err:= db.Model(&amp;ut).Update(&quot;name&quot;,&quot;test&quot;);err!=nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  // UPDATE user_test SET name=&#x27;test&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Updates 多参数修改 (支持结构体，map[string]interface{})</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">COPY  ut := UserTest&#123;CreatedTime:time.Now(),Name:&quot;test&quot;&#125;</span><br><span class="line">  m := map[string]interface&#123;&#125;&#123;</span><br><span class="line">&quot;created_time&quot;:time.Now(),</span><br><span class="line">      &quot;name&quot;:&quot;test&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">  if err := db.Updates(&amp;ut);err!=nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  if err := db.Model(&amp;ut).Updates(m);err!=nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  // UPDATE user_test set created_time=&#x27;2006-01-02 15:04:05&#x27;,name=&#x27;test&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-删除"><a href="#4-删除" class="headerlink" title="4.删除"></a>4.删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">COPY  var ut UserTest</span><br><span class="line">  if err:= db.Model(&amp;ut).Where(&quot;id=?&quot;,1).Delete();err!=nil &#123;</span><br><span class="line">return err</span><br><span class="line">  &#125;</span><br><span class="line">  // DELETE FROM user_test Where id=&#x27;1&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-支持自主语句"><a href="#5-支持自主语句" class="headerlink" title="5.支持自主语句"></a>5.支持自主语句</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">COPYvar id int </span><br><span class="line">db.Raw(&quot;select id from user_test where name=?&quot;,&#x27;test&#x27;).Scan(&amp;id)</span><br><span class="line"></span><br><span class="line">// or </span><br><span class="line">db.Select(&quot;id&quot;).Table(&quot;user_test&quot;).Where(&quot;name=?&quot;,&#x27;test&#x27;).Rows().Scan(&amp;id)</span><br><span class="line">// SELECT id FROM user_test WHERE name=&#x27;test&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-支持-golang-database-db-原生查询"><a href="#3-支持-golang-database-db-原生查询" class="headerlink" title="3.支持 golang database&#x2F;db 原生查询"></a>3.支持 golang database&#x2F;db 原生查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">COPYdb ,err :=sorm.Open(&quot;postgres&quot;,fmt.Sprint(&quot;host=127.0.0.1 port=5432 user=postgres password=123456 dbname=mydb sslmode=disable&quot;))</span><br><span class="line">if err!= nil &#123;</span><br><span class="line">    return err</span><br><span class="line">&#125;</span><br><span class="line">sql := &quot;select * from user_test Where id=? and name=?&quot;</span><br><span class="line"></span><br><span class="line">// Exec</span><br><span class="line">db.Raw(sql,1,&quot;111&quot;).Exec()</span><br><span class="line"></span><br><span class="line">// QueryRow</span><br><span class="line">db.Raw(sql,1,&quot;111&quot;).QuerRow()</span><br><span class="line"></span><br><span class="line">// QueryRows</span><br><span class="line">db.Raw(sql,1,&quot;111&quot;).QueryRows()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-钩子"><a href="#4-钩子" class="headerlink" title="4.钩子"></a>4.钩子</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">COPYBeforeQuery  </span><br><span class="line">AfterQuery  </span><br><span class="line">BeforeUpdate</span><br><span class="line">AfterUpdate </span><br><span class="line">BeforeDelete</span><br><span class="line">AfterDelete</span><br><span class="line">BeforeInsert </span><br><span class="line">AfterInsert </span><br></pre></td></tr></table></figure>
+
+<h4 id="1-使用方法"><a href="#1-使用方法" class="headerlink" title="1.使用方法"></a>1.使用方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">COPY type UserTest struct &#123;</span><br><span class="line">   Id string `db:&quot;id&quot; sorm:&quot;primary key&quot;`</span><br><span class="line">   CreatedTime `db:&quot;created_time&quot;`</span><br><span class="line">   Name string `db:&quot;name&quot;`</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> // 在查询后，返回参数 Name 都为空</span><br><span class="line"> func (o *UserTest) AfterQuery(s *session.Session) &#123;</span><br><span class="line">o.Name = &quot;&quot;</span><br><span class="line">return nil</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> func main () &#123;</span><br><span class="line">   db ,err :=sorm.Open(&quot;postgres&quot;,fmt.Sprint(&quot;host=127.0.0.1 port=5432 user=postgres password=123456 dbname=mydb sslmode=disable&quot;))</span><br><span class="line">   if err!= nil &#123;</span><br><span class="line">       return err</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   var ut UserTest</span><br><span class="line">   if err := ut.First(&amp;ut);err!=nil &#123;</span><br><span class="line">	return err</span><br><span class="line">   &#125;</span><br><span class="line">   fmt.Println(ut)</span><br><span class="line">   // 这个时候打印的 name 参数为空</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/12/13/go-swagger%E4%BD%BF%E7%94%A8/" rel="next" title="go-swagger使用">
+                <i class="fa fa-chevron-left"></i> go-swagger使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/01/18/golang%E5%8D%8F%E7%A8%8B%E5%8F%AF%E7%94%A8%E6%A8%A1%E6%9D%BF/" rel="prev" title="golang协程可用模板">
+                golang协程可用模板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">2.</span> <span class="nav-text">项目地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.1.</span> <span class="nav-text">1.连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="nav-number">4.1.1.</span> <span class="nav-text">1. 基础使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%9B%BF%E6%8D%A2-sqlx"><span class="nav-number">4.1.2.</span> <span class="nav-text">2. 替换 sqlx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-CRUD"><span class="nav-number">4.2.</span> <span class="nav-text">2.CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%96%B0%E5%A2%9E"><span class="nav-number">4.2.1.</span> <span class="nav-text">1.新增</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9"><span class="nav-number">4.2.3.</span> <span class="nav-text">3.修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%88%A0%E9%99%A4"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%94%AF%E6%8C%81%E8%87%AA%E4%B8%BB%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.2.5.</span> <span class="nav-text">5.支持自主语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%94%AF%E6%8C%81-golang-database-db-%E5%8E%9F%E7%94%9F%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.3.</span> <span class="nav-text">3.支持 golang database&#x2F;db 原生查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%92%A9%E5%AD%90"><span class="nav-number">4.4.</span> <span class="nav-text">4.钩子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.4.1.</span> <span class="nav-text">1.使用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%85%E8%A1%A5%E5%85%85"><span class="nav-number">4.5.</span> <span class="nav-text">待补充</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">catbugdemo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

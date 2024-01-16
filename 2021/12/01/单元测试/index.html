@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言 单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。 单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。 单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。 单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单元测试">
+<meta property="og:url" content="http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="catbugdemo的博客">
+<meta property="og:description" content="前言 单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。 单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。 单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。 单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-01T06:30:32.000Z">
+<meta property="article:modified_time" content="2024-01-16T06:44:10.449Z">
+<meta property="article:author" content="catbugdemo">
+<meta property="article:tag" content="Python,Go">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/12/01/单元测试/"/>
+
+
+
+
+
+  <title>单元测试 | catbugdemo的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">catbugdemo的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">需求带动技术，技术引发需求</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/01/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="catbugdemo的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单元测试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-01T14:30:32+08:00">
+                2021-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>单元测试可以有效地测试某个程序模块的行为，是未来重构代码的信心保证。</li>
+<li>单元测试的测试用例要覆盖常用的输入组合、边界条件和异常。</li>
+<li>单元测试代码要非常简单，如果测试代码太复杂，那么测试代码本身就可能有bug。</li>
+<li>单元测试通过了并不意味着程序就没有bug了，但是不通过程序肯定有bug。<span id="more"></span></li>
+</ul>
+<h2 id="单元测试-first-原则"><a href="#单元测试-first-原则" class="headerlink" title="单元测试 first 原则"></a>单元测试 first 原则</h2><h3 id="1-Fast-–-快速"><a href="#1-Fast-–-快速" class="headerlink" title="1.Fast – 快速"></a>1.Fast – 快速</h3><ul>
+<li>快速执行是单测的重要原则，确保单测在秒级甚至毫秒级执行完毕</li>
+</ul>
+<h3 id="2-Isolated-–-隔离"><a href="#2-Isolated-–-隔离" class="headerlink" title="2.Isolated – 隔离"></a>2.Isolated – 隔离</h3><ul>
+<li>好的单测是每个测试用例只关注一个逻辑单元或者代码分支，保证单一职责，这样能更清晰的暴露问题和定位问题</li>
+<li>每个单测之间不应该产生依赖，</li>
+<li>测试时不要依赖和修改外部数据或文件等其他共享资源，做到测试前后共享资源数据一致</li>
+</ul>
+<h3 id="3-Repeatable-–-可重复执行"><a href="#3-Repeatable-–-可重复执行" class="headerlink" title="3.Repeatable – 可重复执行"></a>3.Repeatable – 可重复执行</h3><ul>
+<li>单测是可以重复执行的，不能受到外界环境的影响，同一测试用例，即使是在不同的机器，不同的环境中运行多次，每次运行都会产生相同的结果</li>
+<li>避免隐式输入，不能依赖随机字段如 当前日期，随机数</li>
+</ul>
+<h3 id="4-Self-verifying-–-自我验证"><a href="#4-Self-verifying-–-自我验证" class="headerlink" title="4.Self-verifying – 自我验证"></a>4.Self-verifying – 自我验证</h3><ul>
+<li>单测需要通过断言进行结果验证，即当单测执行完毕之后，用来判断执行结果是否和假设一致，无需人工检查是否执行成功</li>
+</ul>
+<h3 id="5-Timely-Thorough-–-即时，全面"><a href="#5-Timely-Thorough-–-即时，全面" class="headerlink" title="5.Timely &amp; Thorough – 即时，全面"></a>5.Timely &amp; Thorough – 即时，全面</h3><ul>
+<li>理想状态 是 TDD 模式开发 ，但由于项目的紧急性(TDD 测试驱动开发一般无法实现，不要过分追求完美– 会害死自己)</li>
+<li>不要去想 100% 测试覆盖率 ，<strong>花合理的时间抓出大多数 bug, 要好过穷尽一生抓出所有 bug</strong></li>
+<li>考虑到参数的边界，特殊值，正常场景以及异常场景，<strong>保证核心流程是正确的</strong></li>
+</ul>
+<h2 id="golang-推荐好用的单测工具"><a href="#golang-推荐好用的单测工具" class="headerlink" title="golang 推荐好用的单测工具"></a>golang 推荐好用的单测工具</h2><ul>
+<li>golang 内置 func TestXXX</li>
+<li>assert 自动化测试断言工具 — github.com&#x2F;stretchr&#x2F;testify</li>
+<li>ginkgo BDD测试思想 工具 – <a target="_blank" rel="noopener" href="https://github.com/onsi/ginkgo">https://github.com/onsi/ginkgo</a></li>
+<li>miniredis 缓存模拟工具 – github.com&#x2F;alicebob&#x2F;miniredis</li>
+<li>go-sqlmock 模拟工具 – github.com&#x2F;DATA-DOG&#x2F;go-sqlmock</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/387540827">https://zhuanlan.zhihu.com/p/387540827</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/09/16/%E5%AD%A6%E4%B9%A0%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="next" title="学习位运算">
+                <i class="fa fa-chevron-left"></i> 学习位运算
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/12/13/go-swagger%E4%BD%BF%E7%94%A8/" rel="prev" title="go-swagger使用">
+                go-swagger使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-first-%E5%8E%9F%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">单元测试 first 原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Fast-%E2%80%93-%E5%BF%AB%E9%80%9F"><span class="nav-number">2.1.</span> <span class="nav-text">1.Fast – 快速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Isolated-%E2%80%93-%E9%9A%94%E7%A6%BB"><span class="nav-number">2.2.</span> <span class="nav-text">2.Isolated – 隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Repeatable-%E2%80%93-%E5%8F%AF%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C"><span class="nav-number">2.3.</span> <span class="nav-text">3.Repeatable – 可重复执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Self-verifying-%E2%80%93-%E8%87%AA%E6%88%91%E9%AA%8C%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">4.Self-verifying – 自我验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Timely-Thorough-%E2%80%93-%E5%8D%B3%E6%97%B6%EF%BC%8C%E5%85%A8%E9%9D%A2"><span class="nav-number">2.5.</span> <span class="nav-text">5.Timely &amp; Thorough – 即时，全面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#golang-%E6%8E%A8%E8%8D%90%E5%A5%BD%E7%94%A8%E7%9A%84%E5%8D%95%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">golang 推荐好用的单测工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">catbugdemo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
